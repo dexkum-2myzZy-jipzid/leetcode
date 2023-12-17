@@ -42,15 +42,17 @@ def read_folders_in_leetcode():
 
 
 def dict_to_markdown_link(files_dict):
-    solution_group = []
-    markdown_link = ""
+    markdown_links = ""
     for key, values in files_dict.items():
         if values:  # Check if the list under the key is not empty
             # Create a Markdown link using the first file path
-            markdown_link = f"[{key.capitalize()}]({values[0]})"
-            solution_group.append(markdown_link)
+            link = f"[{key.capitalize()}]({values[0]})"
+            if len(markdown_links) > 0:
+                markdown_links += (" " + link)
+            else:
+                markdown_links += link
 
-    return solution_group
+    return markdown_links
 
 
 def tweak_dict_fit_markdown_format(dict):
@@ -64,7 +66,6 @@ def tweak_dict_fit_markdown_format(dict):
 
 files_dict = read_folders_in_leetcode()
 md_dict = tweak_dict_fit_markdown_format(files_dict)
-print(md_dict)
 excel_path = "LeetCodeFiles.xlsx"
 dict_to_excel(md_dict, excel_path)
 print(f"Excel file created at {excel_path}")
