@@ -27,7 +27,7 @@ Repo for leetcode practices
 | 20   | 392. Is Subsequence                                | [Python](LeetCode/392.Is_Subsequence/Mario/392.Is_Subsequence.py) |
 | 21   | 46. Permutations                                   | [Java](LeetCode/46.Permutations/Susan/solution.java)         |
 | 22   | 80. Remove Duplicates from Sorted Array II         | [Python](LeetCode/80.Remove_Duplicates_from_Sorted_Array_II/Mario/80.Remove_Duplicates_from_Sorted_Array_II.py) |
-| 23   | 1429. First Unique Number                          | [Java](LeetCode/1429.First Unique Number/FirstUnique.java)   |
+| 23   | 1429. First Unique Number                          | [Java](LeetCode/1429.First_Unique_Number/FirstUnique.java)   |
 | 24   | 103. Binary Tree Zigzag Level Order Traversal      | [Python](LeetCode/103.Binary_Tree_Zigzag_Level_Order_Traversal/Mario/103.Binary_Tree_Zigzag_Level_Order_Traversal.py) |
 | 25   | 125. Valid Palindrome                              | [Python](LeetCode/125.Valid_Palindrome/Mario/125.Valid_Palindrome.py) |
 | 26   | 124. Binary Tree Maximum Path Sum                  | [Python](LeetCode/124.Binary_Tree_Maximum_Path_Sum/Mario/124.Binary_Tree_Maximum_Path_Sum.py) |
