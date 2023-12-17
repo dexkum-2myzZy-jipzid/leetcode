@@ -35,6 +35,10 @@ def read_folders_in_leetcode():
         item_path = os.path.join(leetcode_path, item)
         # 如果是目录，并且名称以数字开头，则打印
         if os.path.isdir(item_path) and item[0].isdigit():
+            # 题目title美观
+            item = item.replace(".", ". ", 1)
+            item = item.replace("_", " ")
+
             dict["Title"].append(item)
             dict["file_path"].append(find_python_java_files(item_path))
 
