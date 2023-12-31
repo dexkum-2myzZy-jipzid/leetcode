@@ -120,3 +120,12 @@ print(chain['one'])    # Outputs: 1
 ```
 
 These examples demonstrate basic usage and functionality of each collection type. The `collections` module offers additional methods and features for each of these collections, which can be very useful for various programming scenarios.
+
+
+
+## Built-in Function
+
+| Function/Concept | Description                                                  | Example                                                      |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `zip`            | Combines elements from two or more iterables into tuples. Iteration stops at the shortest iterable. | `zip([1, 2, 3], ['a', 'b', 'c'])` results in `[(1, 'a'), (2, 'b'), (3, 'c')]` |
+| `enumerate`      | Combines the index and the elements of an iterable into tuples. Useful for getting the index along with the element during iteration. | `enumerate(['a', 'b', 'c'])` results in `[(0, 'a'), (1, 'b'), (2, 'c')]` |
