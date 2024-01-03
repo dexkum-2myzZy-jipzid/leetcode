@@ -18,7 +18,7 @@ def create_file(filename, user="Mario"):
         os.makedirs(directory)
 
     # Step 5: Create the file
-    file_extension = "py" if user == "Mario" else "java"
+    file_extension = "java"
     file_path = f"{directory}/{filename}.{file_extension}"
     with open(file_path, 'w') as file:
         pass
