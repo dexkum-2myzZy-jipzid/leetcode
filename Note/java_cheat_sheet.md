@@ -72,6 +72,30 @@ In this case, `a == b` would return `true` because both `a` and `b` refer to the
 
 
 
+### StringBuilder
+
+Here's a table summarizing common `StringBuilder` methods and their usage in Java:
+
+| Method                                    | Description                                                  | Example Usage                                                |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `StringBuilder()`                         | Creates an empty `StringBuilder` with a default capacity.    | `StringBuilder sb = new StringBuilder();`                    |
+| `StringBuilder(String str)`               | Creates a `StringBuilder` containing the specified string.   | `StringBuilder sb = new StringBuilder("Hello");`             |
+| `append(...)`                             | Appends the specified data to the end of the sequence.       | `sb.append(" World");` // "Hello World"                      |
+| `insert(int offset, ...)`                 | Inserts data at the specified position.                      | `sb.insert(6, "Java ");` // Inserts at index 6               |
+| `replace(int start, int end, String str)` | Replaces the characters in a substring of this sequence with the specified string. | `sb.replace(11, 16, "Earth");` // Replaces text from index 11 to 16 |
+| `delete(int start, int end)`              | Removes the characters in a substring of this sequence.      | `sb.delete(5, 6);` // Deletes characters from index 5 to 6   |
+| `deleteCharAt(int index)`                 | Removes the character at the specified position.             | `sb.deleteCharAt(5);` // Deletes character at index 5        |
+| `reverse()`                               | Reverses the characters in this sequence.                    | `sb.reverse();` // Reverses the sequence                     |
+| `toString()`                              | Converts the sequence of characters to a string.             | `String str = sb.toString();` // Converts to string          |
+| `length()`                                | Returns the length (character count) of this sequence.       | `int len = sb.length();` // Gets the length                  |
+| `setLength(int newLength)`                | Sets the length of the character sequence.                   | `sb.setLength(10);` // Sets length to 10                     |
+| `charAt(int index)`                       | Returns the character at the specified index.                | `char c = sb.charAt(5);` // Gets character at index 5        |
+| `setCharAt(int index, char ch)`           | Sets the character at the specified index to `ch`.           | `sb.setCharAt(5, 'X');` // Sets character at index 5 to 'X'  |
+
+This table covers the most commonly used methods of the `StringBuilder` class in Java. Remember that `StringBuilder` is used for creating and manipulating strings dynamically, which can be more efficient than using immutable strings (`String`) when dealing with numerous or complex string operations.
+
+
+
 ## Collections 
 
 Here are some of the most commonly used collections and how to use them:
