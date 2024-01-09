@@ -3,12 +3,7 @@ class Solution {
     private List<List<Integer>> res = new ArrayList<>();
 
     public List<List<Integer>> combine(int n, int k) {
-        for (int i = 1; i <= n; i++) {
-            ArrayList<Integer> list = new ArrayList<>();
-            list.add(i);
-            backtracking(list, k - 1, i + 1, n);
-        }
-
+        backtracking(new ArrayList<>(), k, 1, n);
         return res;
     }
 
