@@ -106,7 +106,7 @@ Here are some of the most commonly used collections and how to use them:
      - `List<String> list = new ArrayList<>();`
      - `list.add("Apple");`
      - `list.get(0); // Accessing elements`
-     - `list.remove("Apple"); // Removing elements`
+     - `list.remove(i); // Removing elements, i is index`
 2. **LinkedList**:
    - Description: Implements List and Deque interfaces; useful for efficient insertion and removal at both ends.
    - Usage:
