@@ -3,28 +3,31 @@ class Solution {
     List<List<Integer>> res = new ArrayList<>();
 
     public List<List<Integer>> permute(int[] nums) {
-        backtracking(new ArrayList<Integer>(), nums);
+        backtracking(nums, 0);
         return res;
     }
 
-    private void backtracking(ArrayList<Integer> order, int[] left) {
-        if (left.length == 0) {
-            res.add(new ArrayList<>(order));
+    private void backtracking(int[] nums, int start) {
+        if (nums.length == start) {
+            ArrayList permutation = new ArrayList<>();
+            for (int num : nums) {
+                permutation.add(num);
+            }
+            res.add(permutation);
             return;
         }
 
-        for (int i = 0; i < left.length; i++) {
-            order.add(left[i]);
-            int[] newLeft = new int[left.length - 1];
-            for (int j = 0; j < newLeft.length; j++) {
-                int leftIdx = j;
-                if (j >= i) {
-                    leftIdx += 1;
-                }
-                newLeft[j] = left[leftIdx];
-            }
-            backtracking(order, newLeft);
-            order.remove(order.size() - 1);
+        for (int i = start; i < nums.length; i++) {
+            swap(nums, i, start);
+            // System.out.println("nums:" + Arrays.toString(nums));
+            backtracking(nums, start + 1);
+            swap(nums, start, i);
         }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }
