@@ -151,6 +151,14 @@ Here are some of the most commonly used collections and how to use them:
      - `Deque<String> deque = new ArrayDeque<>();`
      - `deque.addFirst("First"); // Adding at the beginning`
      - `deque.addLast("Last"); // Adding at the end`
+8. **Heap**:
+   - Description: Heap is a tree-like data structure that satisfies the heap property: In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C. In a min heap, the opposite is true. [Heap is often used to implement priority queues or sorting algorithms](https://otda.ny.gov/programs/heap/)[1](https://otda.ny.gov/programs/heap/).
+   - Usage:
+     - `PriorityQueue<Integer> minHeap = new PriorityQueue<>(); // Create a min-heap`
+     - `PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder()); // Create a max-heap`
+     - `minHeap.add(10); // Add an element to the heap`
+     - `maxHeap.remove(); // Remove the root element (the maximum or minimum) from the heap`
+     - `minHeap.peek(); // Get the root element without removing it`
 
 
 
