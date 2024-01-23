@@ -299,7 +299,7 @@ Here are seven tables, each dedicated to a different category of common operator
    | Operator | Description | Example                | Result  |
    | -------- | ----------- | ---------------------- | ------- |
    | `&&`     | Logical AND | `(5 > 3) && (5 > 4)`   | `true`  |
-   | `\|\|`   | Logical OR  | `(5 > 3) \|\| (5 < 4)` | `true`  |
+   | `||`     | Logical OR  | `(5 > 3) \|\| (5 < 4)` | `true`  |
    | `!`      | Logical NOT | `!(5 > 3)`             | `false` |
 
 4. **Assignment Operators**
@@ -318,7 +318,7 @@ Here are seven tables, each dedicated to a different category of common operator
    | Operator | Description          | Example   | Result (if `a = 5` and `b = 3`) |
    | -------- | -------------------- | --------- | ------------------------------- |
    | `&`      | Bitwise AND          | `a & b`   | `1`                             |
-   | `\|`     | Bitwise OR           | `a \| b`  | `7`                             |
+   | `\|`     | Bitwise OR           | `a | b`   | `7`                             |
    | `^`      | Bitwise XOR          | `a ^ b`   | `6`                             |
    | `~`      | Bitwise Complement   | `~a`      | `-6`                            |
    | `<<`     | Left shift           | `a << 1`  | `10`                            |
