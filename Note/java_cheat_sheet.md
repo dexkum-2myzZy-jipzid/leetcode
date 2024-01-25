@@ -60,7 +60,7 @@ Here are some key points and common methods for `String` usage in Java:
    
      
 
-> **Note:** `==`  vs `equals`
+### `==`  vs `equals`
 
 For example:
 
@@ -69,6 +69,26 @@ For example:
 - `String c = new String("Hello");`
 
 In this case, `a == b` would return `true` because both `a` and `b` refer to the same string literal in the string pool. However, `a == c` would return `false` because `c` is created as a new `String` object, and it resides in a different memory location, even though it contains the same characters as `a`.
+
+
+
+### Conversion between String and num
+
+In Java, you can convert an `int` to a `String` using either the `String.valueOf()` method or the `Integer.toString()` method. Here's how you can do it:
+
+Using `String.valueOf()` method:
+```java
+int num = 123;
+String str = String.valueOf(num);
+```
+
+Using `Integer.toString()` method:
+```java
+int num = 123;
+String str = Integer.toString(num);
+```
+
+Both methods will convert the `int` value `123` to the `String` value `"123"`. You can then use the resulting `String` object as needed in your program.
 
 
 
