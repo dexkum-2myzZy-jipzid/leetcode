@@ -1,27 +1,25 @@
 class Solution {
     public int maxPoints(int[][] points) {
-        if (points.length <= 2) {
-            return points.length;
-        }
+        int n = points.length;
+        if (n < 3)
+            return n;
 
-        int maxPoints = 1;
-        for (int i = 0; i < points.length; i++) {
-            Map<Double, Integer> slopeCount = new HashMap<>();
+        int max = 2;
+        for (int i = 0; i < n; i++) {
+            Map<Double, Integer> map = new HashMap<>();
             int localMax = 1;
+            for (int j = 0; j < n; j++) {
+                if (i == j)
+                    continue;
+                int deltaX = points[i][0] - points[j][0];
+                int deltaY = points[i][1] - points[j][1];
 
-            for (int j = 0; j < points.length; j++) {
-                if (i != j) {
-                    int deltaX = points[j][0] - points[i][0];
-                    int deltaY = points[j][1] - points[i][1];
-
-                    double slope = (deltaY == 0) ? Double.POSITIVE_INFINITY : (double) deltaX / deltaY;
-                    slopeCount.put(slope, slopeCount.getOrDefault(slope, 1) + 1);
-                    localMax = Math.max(localMax, slopeCount.get(slope));
-                }
+                Double slope = (deltaY == 0) ? Double.POSITIVE_INFINITY : (double) deltaX / deltaY;
+                map.put(slope, map.getOrDefault(slope, 1) + 1);
+                localMax = Math.max(localMax, map.get(slope));
             }
-            maxPoints = Math.max(maxPoints, localMax);
+            max = Math.max(max, localMax);
         }
-
-        return maxPoints;
+        return max;
     }
 }
