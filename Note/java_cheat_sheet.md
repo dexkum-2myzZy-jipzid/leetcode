@@ -127,6 +127,7 @@ Here are some of the most commonly used collections and how to use them:
      - `list.add("Apple");`
      - `list.get(0); // Accessing elements`
      - `list.remove(i); // Removing elements, i is index`
+   
 2. **LinkedList**:
    - Description: Implements List and Deque interfaces; useful for efficient insertion and removal at both ends.
    - Usage:
@@ -134,6 +135,7 @@ Here are some of the most commonly used collections and how to use them:
      - `linkedList.add("Banana");`
      - `linkedList.addFirst("Apple"); // Adding at the beginning`
      - `linkedList.getLast(); // Accessing the last element`
+   
 3. **HashSet**:
    - Description: Implements the Set interface; it's an unordered collection that doesn't allow duplicate values.
    - Usage:
@@ -141,20 +143,34 @@ Here are some of the most commonly used collections and how to use them:
      - `set.add(1);`
      - `set.contains(1); // Checking for a value`
      - `set.remove(1);`
+   
 4. **TreeSet**:
+   
    - Description: Implements the SortedSet interface; stores elements in a sorted (ascending) manner.
    - Usage:
      - `Set<String> treeSet = new TreeSet<>();`
      - `treeSet.add("Orange");`
      - `treeSet.first(); // Accessing the first element`
      - `treeSet.last(); // Accessing the last element`
+   
 5. **HashMap**:
    - Description: Implements Map interface; stores key-value pairs and allows fast retrieval based on key.
+   
    - Usage:
      - `Map<String, Integer> map = new HashMap<>();`
+     
      - `map.put("Key", 1);`
+     
      - `map.get("Key"); // Accessing values`
+     
      - `map.remove("Key");`
+     
+     - `map.computeIfAbsent(k, key -> new HashSet<>()).add(i);`
+     
+       - This line of code checks if the key 'k' exists in the map; if not, it creates a new HashSet for that key, and then adds the value 'i' to that HashSet.
+     
+     - `map.put(k, map.getOrDefault(k, 1) + 1);`
+   
 6. **TreeMap**:
    - Description: Implements the SortedMap interface; stores key-value pairs in a sorted order of keys.
    - Usage:
@@ -162,6 +178,7 @@ Here are some of the most commonly used collections and how to use them:
      - `treeMap.put("Key", 1);`
      - `treeMap.firstKey(); // Accessing the smallest key`
      - `treeMap.lastKey(); // Accessing the largest key`
+   
 7. **Queue/Deque**:
    - Description: Queue typically orders elements in FIFO (first-in-first-out) manner. Deque (double-ended queue) allows insertion and removal at both ends.
    - Usage:
@@ -171,7 +188,9 @@ Here are some of the most commonly used collections and how to use them:
      - `Deque<String> deque = new ArrayDeque<>();`
      - `deque.addFirst("First"); // Adding at the beginning`
      - `deque.addLast("Last"); // Adding at the end`
-8. **Heap**:
+   
+8. **PriorityQueue**:
+   
    - Description: Heap is a tree-like data structure that satisfies the heap property: In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C. In a min heap, the opposite is true. [Heap is often used to implement priority queues or sorting algorithms](https://otda.ny.gov/programs/heap/)[1](https://otda.ny.gov/programs/heap/).
    - Usage:
      - `PriorityQueue<Integer> minHeap = new PriorityQueue<>(); // Create a min-heap`
