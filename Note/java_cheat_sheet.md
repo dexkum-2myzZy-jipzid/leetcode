@@ -92,6 +92,16 @@ Both methods will convert the `int` value `123` to the `String` value `"123"`. Y
 
 
 
+### Char
+
+```java
+char[] charArray = s.toCharArray();
+```
+
+
+
+
+
 ### StringBuilder
 
 Here's a table summarizing common `StringBuilder` methods and their usage in Java:
