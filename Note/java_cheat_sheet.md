@@ -391,3 +391,9 @@ Here are seven tables, each dedicated to a different category of common operator
 
 
 
+## Sort
+
+```java
+List<Integer> ans = new ArrayList<>();
+Collections.sort(ans);
+```
