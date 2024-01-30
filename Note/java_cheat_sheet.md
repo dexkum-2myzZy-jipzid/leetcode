@@ -413,3 +413,46 @@ The `swap` method, as mentioned earlier, is used to swap the elements at two spe
 
 
 
+## Stack
+
+A stack is a Last In, First Out (LIFO) data structure, and it typically supports the following common methods:
+
+1. **`push(element)`**: Adds an element to the top of the stack.
+
+    ```java
+    Stack<Integer> stack = new Stack<>();
+    stack.push(5);
+    stack.push(10);
+    ```
+
+2. **`pop()`**: Removes and returns the top element from the stack.
+
+    ```java
+    int topElement = stack.pop();
+    ```
+
+3. **`peek()`**: Returns the top element without removing it from the stack.
+
+    ```java
+    int topElement = stack.peek();
+    ```
+
+4. **`empty()`**: Checks if the stack is empty.
+
+    ```java
+    boolean isEmpty = stack.empty();
+    ```
+
+5. **`search(element)`**: Searches for an element in the stack and returns its position. If the element is not found, it returns -1.
+
+    ```java
+    int position = stack.search(10);
+    ```
+
+6. **`size()`**: Returns the number of elements in the stack.
+
+    ```java
+    int size = stack.size();
+    ```
+
+These methods are commonly used when working with stacks in Java. Keep in mind that the `Stack` class in Java extends the `Vector` class, which might have some synchronization overhead. If you don't need synchronization, consider using `Deque` implementations like `LinkedList` or `ArrayDeque` for better performance.
