@@ -367,7 +367,7 @@ Here are seven tables, each dedicated to a different category of common operator
    | Operator | Description          | Example   | Result (if `a = 5` and `b = 3`) |
    | -------- | -------------------- | --------- | ------------------------------- |
    | `&`      | Bitwise AND          | `a & b`   | `1`                             |
-   | `\|`     | Bitwise OR           | `a | b`   | `7`                             |
+   | `|`      | Bitwise OR           | `a | b`   | `7`                             |
    | `^`      | Bitwise XOR          | `a ^ b`   | `6`                             |
    | `~`      | Bitwise Complement   | `~a`      | `-6`                            |
    | `<<`     | Left shift           | `a << 1`  | `10`                            |
@@ -391,9 +391,25 @@ Here are seven tables, each dedicated to a different category of common operator
 
 
 
-## Sort
+## Collections Method Usage
 
-```java
-List<Integer> ans = new ArrayList<>();
-Collections.sort(ans);
-```
+Certainly! Here's the updated table with the `swap` method added:
+
+| Method                                                       | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `sort(List<T> list)`                                         | Sorts the specified list into ascending order, according to the natural ordering of its elements. |
+| `reverse(List<?> list)`                                      | Reverses the order of the elements in the specified list.    |
+| `shuffle(List<?> list)`                                      | Randomly permutes the specified list using a default source of randomness. |
+| `binarySearch(List<? extends Comparable<? super T>> list, T key)` | Searches the specified list for the specified object using the binary search algorithm. |
+| `swap(List<?> list, int i, int j)`                           | Swaps the elements at the specified positions in the specified list. |
+| `copy(List<? super T> dest, List<? extends T> src)`          | Copies all of the elements from one list into another.       |
+| `fill(List<? super T> list, T obj)`                          | Replaces all of the elements of the specified list with the specified element. |
+| `frequency(Collection<?> c, Object o)`                       | Returns the number of elements in the specified collection equal to the specified object. |
+| `max(Collection<? extends T> coll)`                          | Returns the maximum element of the given collection, according to the natural ordering of its elements. |
+| `min(Collection<? extends T> coll)`                          | Returns the minimum element of the given collection, according to the natural ordering of its elements. |
+| `addAll(Collection<? super T> c, T... elements)`             | Adds all of the specified elements to the specified collection. |
+
+The `swap` method, as mentioned earlier, is used to swap the elements at two specified positions in a list.
+
+
+
