@@ -393,8 +393,6 @@ Here are seven tables, each dedicated to a different category of common operator
 
 ## Collections Method Usage
 
-Certainly! Here's the updated table with the `swap` method added:
-
 | Method                                                       | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | `sort(List<T> list)`                                         | Sorts the specified list into ascending order, according to the natural ordering of its elements. |
@@ -408,8 +406,6 @@ Certainly! Here's the updated table with the `swap` method added:
 | `max(Collection<? extends T> coll)`                          | Returns the maximum element of the given collection, according to the natural ordering of its elements. |
 | `min(Collection<? extends T> coll)`                          | Returns the minimum element of the given collection, according to the natural ordering of its elements. |
 | `addAll(Collection<? super T> c, T... elements)`             | Adds all of the specified elements to the specified collection. |
-
-The `swap` method, as mentioned earlier, is used to swap the elements at two specified positions in a list.
 
 
 
