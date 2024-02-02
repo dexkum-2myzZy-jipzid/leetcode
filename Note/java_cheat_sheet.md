@@ -96,9 +96,34 @@ Both methods will convert the `int` value `123` to the `String` value `"123"`. Y
 
 ```java
 char[] charArray = s.toCharArray();
+
+//check if a character is alphanumeric (i.e., a letter or a digit)
+Character.isLetterOrDigit(ch);
 ```
 
 
+
+### LowerCase & UpperCase
+
+In Java, you can convert a string to lowercase or uppercase using the `toLowerCase()` and `toUpperCase()` methods of the `String` class, respectively. These methods return a new string with all the characters converted to lowercase or uppercase. Here's how you can use them:
+
+```java
+String str = "Hello World";
+
+// Convert to lowercase
+String lowercaseStr = str.toLowerCase();
+System.out.println("Lowercase: " + lowercaseStr); // Output: hello world
+
+// Convert to uppercase
+String uppercaseStr = str.toUpperCase();
+System.out.println("Uppercase: " + uppercaseStr); // Output: HELLO WORLD
+```
+
+In this example:
+- `toLowerCase()` converts all characters in the string `str` to lowercase and stores the result in the variable `lowercaseStr`.
+- `toUpperCase()` converts all characters in the string `str` to uppercase and stores the result in the variable `uppercaseStr`.
+
+You can use these methods to convert strings between lowercase and uppercase as needed in your Java programs.
 
 
 
@@ -200,7 +225,6 @@ Here are some of the most commonly used collections and how to use them:
      - `deque.addLast("Last"); // Adding at the end`
    
 8. **PriorityQueue**:
-   
    - Description: Heap is a tree-like data structure that satisfies the heap property: In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C. In a min heap, the opposite is true. [Heap is often used to implement priority queues or sorting algorithms](https://otda.ny.gov/programs/heap/)[1](https://otda.ny.gov/programs/heap/).
    - Usage:
      - `PriorityQueue<Integer> minHeap = new PriorityQueue<>(); // Create a min-heap`
@@ -451,4 +475,4 @@ A stack is a Last In, First Out (LIFO) data structure, and it typically supports
     int size = stack.size();
     ```
 
-These methods are commonly used when working with stacks in Java. Keep in mind that the `Stack` class in Java extends the `Vector` class, which might have some synchronization overhead. If you don't need synchronization, consider using `Deque` implementations like `LinkedList` or `ArrayDeque` for better performance.
+These methods are commonly used when working with stacks in Java. Keep in mind that the `Stack` class in Java extends the `Vector` class, which might have some synchronization overhead. If you don't need synchronization, consider using `Deque` implementations like `LinkedList` or `ArrayDeque` for better performance. 
