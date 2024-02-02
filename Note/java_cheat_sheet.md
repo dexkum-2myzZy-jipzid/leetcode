@@ -201,10 +201,9 @@ Here are some of the most commonly used collections and how to use them:
      - `map.remove("Key");`
      
      - `map.computeIfAbsent(k, key -> new HashSet<>()).add(i);`
-     
        - This line of code checks if the key 'k' exists in the map; if not, it creates a new HashSet for that key, and then adds the value 'i' to that HashSet.
-     
-     - `map.put(k, map.getOrDefault(k, 1) + 1);`
+       
+     - `map.put(k, map.getOrDefault(k, 0) + 1);`
    
 6. **TreeMap**:
    - Description: Implements the SortedMap interface; stores key-value pairs in a sorted order of keys.
