@@ -228,8 +228,8 @@ Here are some of the most commonly used collections and how to use them:
    - Usage:
      - `PriorityQueue<Integer> minHeap = new PriorityQueue<>(); // Create a min-heap`
      - `PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder()); // Create a max-heap`
-     - `minHeap.add(10); // Add an element to the heap`
-     - `maxHeap.remove(); // Remove the root element (the maximum or minimum) from the heap`
+     - `minHeap.offer(10); // Add an element to the heap`
+     - `maxHeap.poll(); // Remove the root element (the maximum or minimum) from the heap`
      - `minHeap.peek(); // Get the root element without removing it`
 
 
