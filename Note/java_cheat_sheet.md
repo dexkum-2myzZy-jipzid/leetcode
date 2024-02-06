@@ -162,6 +162,7 @@ Here are some of the most commonly used collections and how to use them:
      - `list.add("Apple");`
      - `list.get(0); // Accessing elements`
      - `list.remove(i); // Removing elements, i is index`
+     - `set(int index, E element)`: Replaces the element at the specified position in the list with the specified element.
    
 2. **LinkedList**:
    - Description: Implements List and Deque interfaces; useful for efficient insertion and removal at both ends.
@@ -429,6 +430,19 @@ Here are seven tables, each dedicated to a different category of common operator
 | `max(Collection<? extends T> coll)`                          | Returns the maximum element of the given collection, according to the natural ordering of its elements. |
 | `min(Collection<? extends T> coll)`                          | Returns the minimum element of the given collection, according to the natural ordering of its elements. |
 | `addAll(Collection<? super T> c, T... elements)`             | Adds all of the specified elements to the specified collection. |
+
+
+
+## Array Method Usage
+
+Certainly! Here's the updated table with an additional column indicating how to use each method:
+
+| Method                  | Description                                                  | How to Use                                                   |
+| ----------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `System.arraycopy()`    | Copies a range of elements from one array to another.        | ```java int[] source = {1, 2, 3}; int[] destination1 = new int[source.length]; System.arraycopy(source, 0, destination1, 0, source.length); ``` |
+| `Arrays.copyOf()`       | Copies the specified array, truncating or padding with zeros (if necessary) to obtain the specified length. | ```java int[] source = {1, 2, 3}; int[] destination2 = Arrays.copyOf(source, source.length); ``` |
+| `Arrays.sort()`         | Sorts the specified array into ascending numerical order.    | ```java int[] numbers = {5, 2, 8, 1, 3}; Arrays.sort(numbers); ``` |
+| `Arrays.binarySearch()` | Searches the specified array for the specified value using the binary search algorithm. | ```java int[] numbers = {1, 2, 3, 4, 5}; int index = Arrays.binarySearch(numbers, 3); ``` |
 
 
 
