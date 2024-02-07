@@ -31,3 +31,31 @@ class Solution {
         nums[j] = tmp;
     }
 }
+
+// use visited array to record the visited element
+class Solution {
+    private List<List<Integer>> res;
+
+    public List<List<Integer>> permute(int[] nums) {
+        res = new ArrayList<>();
+        backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length]);
+        return res;
+    }
+
+    private void backtrack(List<Integer> list, int[] nums, boolean[] visited) {
+        if (list.size() == nums.length) {
+            res.add(new ArrayList(list));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i])
+                continue;
+            visited[i] = true;
+            list.add(nums[i]);
+            backtrack(list, nums, visited);
+            list.removeLast();
+            visited[i] = false;
+        }
+    }
+}
