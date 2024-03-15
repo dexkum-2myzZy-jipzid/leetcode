@@ -7,14 +7,13 @@ class Solution {
         Arrays.sort(nums);
 
         int n = nums.length;
-        int right = n - 1;
         for (int i = 0; i < n - 2; i++) {
             if (nums[i] > 0) {
                 break;
             }
 
             if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
-                twoSum(nums, -nums[i], i + 1, right);
+                twoSum(nums, -nums[i], i + 1, n - 1);
             }
         }
 
