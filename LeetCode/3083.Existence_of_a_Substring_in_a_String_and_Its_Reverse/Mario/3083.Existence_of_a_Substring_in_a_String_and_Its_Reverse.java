@@ -1,20 +1,15 @@
 class Solution {
     public boolean isSubstringPresent(String s) {
+        boolean[][] set = new boolean[26][26];
+        char[] chs = s.toCharArray();
 
-        char[] chars = s.toCharArray();
-        int n = chars.length;
-
-        for (int i = 1; i < n; i++) {
-            char cur = chars[i], pre = chars[i - 1];
-            if (cur == pre)
+        for (int i = 0; i < chs.length - 1; i++) {
+            int a = chs[i] - 'a', b = chs[i + 1] - 'a';
+            set[a][b] = true;
+            if (set[b][a]) {
                 return true;
-            for (int j = 0; j < n; j++) {
-                if (cur == chars[j] && j + 1 < n && chars[j + 1] == pre) {
-                    return true;
-                }
             }
         }
-
         return false;
     }
 }
