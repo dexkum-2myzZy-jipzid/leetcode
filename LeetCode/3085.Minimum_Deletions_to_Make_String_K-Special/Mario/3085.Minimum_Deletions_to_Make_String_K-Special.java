@@ -1,29 +1,22 @@
 class Solution {
     public int minimumDeletions(String word, int k) {
-        Map<Character, Integer> counter = new HashMap<>();
-
-        for (char ch : word.toCharArray()) {
-            counter.put(ch, counter.getOrDefault(ch, 0) + 1);
+        int[] counter = new int[26];
+        for (char c : word.toCharArray()) {
+            counter[c - 'a'] += 1;
         }
 
-        List<Integer> list = new ArrayList<>();
-        for (Integer val : counter.values()) {
-            list.add(val);
+        Arrays.sort(counter);
+
+        int maxSave = 0;
+        for (int i = 0; i < 26; i++) {
+            if (counter[i] == 0)
+                continue;
+            int sum = counter[i];
+            for (int j = i + 1; j < 26; j++) {
+                sum += Math.min(counter[i] + k, counter[j]);
+            }
+            maxSave = Math.max(maxSave, sum);
         }
-
-        Collections.sort(list);
-        // System.out.println(list);
-        int n = list.size();
-
-        return helper(list, 0, n - 1, k, 0);
-    }
-
-    private int helper(List<Integer> list, int i, int j, int k, int count) {
-        int left = list.get(i), right = list.get(j);
-        if (right - left <= k) {
-            return count;
-        }
-        int diff = right - left - k;
-        return Math.min(helper(list, i, j - 1, k, count + diff), helper(list, i + 1, j, k, count + left));
+        return word.length() - maxSave;
     }
 }
