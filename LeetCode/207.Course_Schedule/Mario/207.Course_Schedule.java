@@ -46,3 +46,45 @@ class Solution {
     }
 
 }
+
+// Topological sort
+class Solution {
+    // [1, 0]: 0 -> 1
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        // create directed graph
+        List<List<Integer>> graph = new ArrayList<>(numCourses);
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        // store indegree
+        for (int[] arr : prerequisites) {
+            graph.get(arr[1]).add(arr[0]);
+            indegree[arr[0]] += 1;
+        }
+
+        // find 0 indegree node
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0)
+                queue.offer(i);
+        }
+
+        // topological sort
+        int visited = 0;
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            visited += 1;
+
+            for (int neighbor : graph.get(node)) {
+                indegree[neighbor] -= 1;
+                if (indegree[neighbor] == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+
+        return visited == numCourses;
+    }
+}
