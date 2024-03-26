@@ -10,3 +10,13 @@ class Solution {
         return min;
     }
 }
+
+// Another Solution
+class Solution {
+    // (k-1)/(x + 1) + x
+    public int minOperations(int k) {
+        double x = Math.max(Math.sqrt(k - 1), 1.0);
+        int n = (int) Math.floor(x);
+        return Math.min((k - 1) / n + n - 1, (k - 1) / (n + 1) + n);
+    }
+}
