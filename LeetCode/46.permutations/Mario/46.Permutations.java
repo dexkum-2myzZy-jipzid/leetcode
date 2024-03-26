@@ -34,28 +34,24 @@ class Solution {
 
 // use visited array to record the visited element
 class Solution {
-    private List<List<Integer>> res;
-
     public List<List<Integer>> permute(int[] nums) {
-        res = new ArrayList<>();
-        backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length]);
+        List<List<Integer>> res = new ArrayList<>();
+        backtracking(res, nums, new ArrayList<Integer>());
         return res;
     }
 
-    private void backtrack(List<Integer> list, int[] nums, boolean[] visited) {
-        if (list.size() == nums.length) {
-            res.add(new ArrayList(list));
+    private void backtracking(List<List<Integer>> res, int[] nums, List<Integer> curr) {
+        if (curr.size() == nums.length) {
+            res.add(new ArrayList<>(curr));
             return;
         }
 
         for (int i = 0; i < nums.length; i++) {
-            if (visited[i])
-                continue;
-            visited[i] = true;
-            list.add(nums[i]);
-            backtrack(list, nums, visited);
-            list.removeLast();
-            visited[i] = false;
+            if (!curr.contains(nums[i])) {
+                curr.add(nums[i]);
+                backtracking(res, nums, curr);
+                curr.remove(curr.size() - 1);
+            }
         }
     }
 }
