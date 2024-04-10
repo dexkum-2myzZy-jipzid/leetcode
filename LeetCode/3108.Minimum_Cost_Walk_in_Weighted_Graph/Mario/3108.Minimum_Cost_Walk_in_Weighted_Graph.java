@@ -6,6 +6,7 @@ class Solution {
             uf.union(e[0], e[1], e[2]);
         }
 
+        // query vertices
         int[] res = new int[query.length];
         for (int i = 0; i < query.length; i++) {
             res[i] = uf.query(query[i][0], query[i][1]);
