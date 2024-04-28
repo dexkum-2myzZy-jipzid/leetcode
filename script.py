@@ -3,7 +3,7 @@
 import os
 
 
-def create_file(filename, user="Mario"):
+def create_file(filename, user="Mario", extension="java"):
     # Step 2: Replace spaces with underscores
     filename = filename.replace(" ", "_")
 
@@ -18,7 +18,7 @@ def create_file(filename, user="Mario"):
         os.makedirs(directory)
 
     # Step 5: Create the file
-    file_extension = "java"
+    file_extension = extension
     file_path = f"{directory}/{filename}.{file_extension}"
     with open(file_path, 'w') as file:
         pass
@@ -37,4 +37,6 @@ def create_file(filename, user="Mario"):
 filename = input("Enter the filename: ")
 user = input("Enter the username (default is Mario): ")
 user = user if user else "Mario"
-create_file(filename, user)
+extension = input("Enter the extension of language (default is java): ")
+extension = extension if extension else "java"
+create_file(filename, user, extension)
