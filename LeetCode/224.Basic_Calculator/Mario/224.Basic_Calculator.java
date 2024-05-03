@@ -1,6 +1,5 @@
 class Solution {
     public int calculate(String s) {
-        s = s.replaceAll(" ", "");
         int res = 0, num = 0, sign = 1;
         Stack<Integer> stack = new Stack<>();
         for (char ch : s.toCharArray()) {
@@ -22,7 +21,7 @@ class Solution {
                 res += (num * sign);
                 sign = 1;
                 num = 0;
-            } else {
+            } else if (ch >= '0' && ch <= '9') {
                 num = 10 * num + (ch - '0');
             }
         }
