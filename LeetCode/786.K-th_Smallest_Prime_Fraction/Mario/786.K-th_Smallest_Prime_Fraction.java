@@ -13,19 +13,21 @@ class Solution {
             int numeratorIdx = 0, denominatorIdx = 0;
             // double for loop count then num of fractions smaller than mid
             for (int i = 0; i < n; i++) {
-                for (j = i + 1; j < n; j++) {
-                    if (arr[i] <= mid * arr[j]) {
-                        double tmp = (double) arr[i] / arr[j];
-                        if (tmp > fraction) {
-                            fraction = tmp;
-                            numeratorIdx = i;
-                            denominatorIdx = j;
-                        }
-                        break;
-                    }
+                while (j < n && arr[i] >= mid * arr[j]) {
+                    j++;
                 }
 
                 count += n - j;
+
+                if (j == n)
+                    break;
+
+                double tmp = (double) arr[i] / arr[j];
+                if (tmp > fraction) {
+                    fraction = tmp;
+                    numeratorIdx = i;
+                    denominatorIdx = j;
+                }
             }
 
             // if num is bigger than k, right = mid
