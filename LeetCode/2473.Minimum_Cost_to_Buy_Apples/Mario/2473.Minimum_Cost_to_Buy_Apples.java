@@ -1,46 +1,57 @@
 class Solution {
     public long[] minCost(int n, int[][] roads, int[] appleCost, int k) {
-        // build graph
-        List<List<int[]>> graph = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            graph.add(new ArrayList<int[]>());
+        // Store the graph as a list of lists
+        // Each element of the outer list represents a city,
+        // and each inner list contains pairs of neighboring city and its cost
+        List<List<Pair<Integer, Integer>>> graph = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            graph.add(new ArrayList<>());
         }
 
+        // Add each road to the graph using adjacency lists
+        // Store each city at `graph[city - 1]`
         for (int[] road : roads) {
-            int startCity = road[0], endCity = road[1], cost = road[2];
-            graph.get(startCity - 1).add(new int[] { endCity, cost });
-            graph.get(endCity - 1).add(new int[] { startCity, cost });
+            int cityA = road[0] - 1, cityB = road[1] - 1, cost = road[2];
+            graph.get(cityA).add(new Pair<Integer, Integer>(cityB, cost));
+            graph.get(cityB).add(new Pair<Integer, Integer>(cityA, cost));
         }
 
-        // Like Dijsktra algorithm
-        // 1. setup init value
+        // Store the cost to buy an apple in each city
+        // without traveling in the result
         long[] result = new long[n];
-        for (int i = 0; i < n; i++) {
-            result[i] = appleCost[i];
+        for (int startCity = 0; startCity < n; startCity++) {
+            result[startCity] = appleCost[startCity];
         }
 
-        PriorityQueue<long[]> heap = new PriorityQueue<>((a, b) -> Long.compare(a[0], b[0]));
-        for (int i = 0; i < n; i++) {
-            heap.offer(new long[] { appleCost[i], i });
+        // Initialize the min heap (priority queue) with each starting city
+        // Each element of the heap is a pair with the cost and city
+        Queue<Pair<Long, Integer>> heap = new PriorityQueue<>((a, b) -> Long.compare(a.getKey(), b.getKey()));
+        for (int startCity = 0; startCity < n; startCity++) {
+            heap.add(new Pair<>((long) appleCost[startCity], startCity));
         }
 
-        // 2. Dijstra algo
+        // Find the minimum cost to buy an apple starting in each city
         while (!heap.isEmpty()) {
-            long[] element = heap.poll();
-            long cost = element[0], startCity = element[1];
-            int starInt = (int) startCity;
+            Pair<Long, Integer> current = heap.poll();
+            long totalCost = current.getKey();
+            int currCity = current.getValue();
 
-            if (result[starInt] < cost)
+            // If we have already found a path to buy an apple
+            // for cheaper than the local apple cost, skip this city
+            if (result[currCity] < totalCost)
                 continue;
 
-            for (int[] nei : graph.get(starInt)) {
-                if (result[nei[0] - 1] > nei[1] * (1 + k) + result[starInt]) {
-                    result[nei[0] - 1] = nei[1] * (1 + k) + result[starInt];
-                    heap.offer(new long[] { result[starInt], nei[0] - 1 });
+            // Add each neighboring city to the heap if it is cheaper to
+            // start there, travel to the current city and buy an apple
+            // than buy in the neighboring city
+            for (Pair<Integer, Integer> next : graph.get(currCity)) {
+                int neighbor = next.getKey(), cost = next.getValue();
+                if (result[neighbor] > result[currCity] + (k + 1) * cost) {
+                    result[neighbor] = result[currCity] + (k + 1) * cost;
+                    heap.add(new Pair<Long, Integer>(result[neighbor], neighbor));
                 }
             }
         }
-
         return result;
     }
 }
