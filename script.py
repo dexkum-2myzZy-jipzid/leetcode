@@ -37,7 +37,6 @@ def create_file(filename, user="Mario", extension="java"):
 filename = input("Enter the filename: ")
 user = input("Enter the username (default is Mario): ")
 user = user if user else "Mario"
-# extension = input("Enter the extension of language (default is java): ")
-# extension = extension if extension else "java"
-extension = "java"
+extension = input("Enter the extension of language (default is java): ")
+extension = extension if extension else "java"
 create_file(filename, user, extension)
