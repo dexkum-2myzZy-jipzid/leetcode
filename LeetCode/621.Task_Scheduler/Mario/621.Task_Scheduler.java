@@ -36,3 +36,32 @@ class Solution {
         return result;
     }
 }
+
+// better solution - time: O(n)
+class Solution {
+    // A B _
+    // A B _
+    // A B
+    public int leastInterval(char[] tasks, int n) {
+        // counter task num
+        int[] counter = new int[26];
+        for (char c : tasks) {
+            counter[c - 'A'] += 1;
+        }
+
+        Arrays.sort(counter);
+
+        int maxFreq = counter[25];
+        int idleNum = (maxFreq - 1) * n;
+
+        for (int i = 24; i >= 0; i--) {
+            idleNum -= Math.min(maxFreq - 1, counter[i]);
+            if (idleNum < 0) {
+                idleNum = 0;
+                break;
+            }
+        }
+
+        return tasks.length + idleNum;
+    }
+}
