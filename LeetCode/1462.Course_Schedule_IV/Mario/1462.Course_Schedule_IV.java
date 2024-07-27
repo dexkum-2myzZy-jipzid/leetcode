@@ -52,3 +52,55 @@ class Solution {
         stack.remove(cur);
     }
 }
+
+// Topological Sort - Kahn’s Algorithm
+class Solution {
+    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+        // create graph using adjlist
+        int n = numCourses;
+        boolean[][] matrix = new boolean[n][n];
+        int[] indegree = new int[n];
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int[] p : prerequisites) {
+            int from = p[0], to = p[1];
+            graph.get(from).add(to);
+            indegree[to] += 1;
+        }
+
+        // topological sort
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            for (int nei : graph.get(cur)) {
+                matrix[cur][nei] = true;
+                for (int i = 0; i < n; i++) {
+                    if (matrix[i][cur]) {
+                        matrix[i][nei] = true;
+                    }
+                }
+                indegree[nei] -= 1;
+                if (indegree[nei] == 0) {
+                    queue.offer(nei);
+                }
+            }
+        }
+
+        // iterate queries
+        List<Boolean> result = new ArrayList<>();
+        for (int[] q : queries) {
+            result.add(matrix[q[0]][q[1]]);
+        }
+
+        return result;
+    }
+}
