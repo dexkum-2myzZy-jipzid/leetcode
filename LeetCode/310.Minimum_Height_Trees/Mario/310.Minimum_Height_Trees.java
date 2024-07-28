@@ -1,45 +1,51 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        // handle corner case
-        if (n < 2) {
+        // edge case
+        if (n == 1) {
             List<Integer> result = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                result.add(i);
-            }
+            result.add(0);
             return result;
         }
-        // build graph
+        // create graph with adj list
         List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<>());
         }
+        int[] indegree = new int[n];
         for (int[] edge : edges) {
-            graph.get(edge[0]).add(edge[1]);
-            graph.get(edge[1]).add(edge[0]);
+            int v1 = edge[0], v2 = edge[1];
+            graph.get(v1).add(v2);
+            graph.get(v2).add(v1);
+            indegree[v1]++;
+            indegree[v2]++;
         }
 
-        List<Integer> leaves = new ArrayList<>();
+        Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            List<Integer> list = graph.get(i);
-            if (list.size() == 1)
-                leaves.add(i);
-        }
-
-        int remaningLeaves = n;
-        while (remaningLeaves > 2) {
-            remaningLeaves -= leaves.size();
-            List<Integer> newLeaves = new ArrayList<>();
-            for (Integer leaf : leaves) {
-                // leaves only has one indegree
-                int neighbor = graph.get(leaf).get(0);
-                graph.get(neighbor).remove(leaf);
-                if (graph.get(neighbor).size() == 1)
-                    newLeaves.add(neighbor);
+            if (indegree[i] == 1) {
+                queue.offer(i);
             }
-
-            leaves = newLeaves;
         }
 
-        return leaves;
+        int leftLeaves = n;
+        while (leftLeaves > 2) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int v = queue.poll();
+                leftLeaves -= 1;
+                for (int nei : graph.get(v)) {
+                    indegree[nei] -= 1;
+                    if (indegree[nei] == 1) {
+                        queue.offer(nei);
+                    }
+                }
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            result.add(queue.poll());
+        }
+        return result;
     }
 }
