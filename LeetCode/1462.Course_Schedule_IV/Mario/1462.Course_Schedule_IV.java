@@ -104,3 +104,30 @@ class Solution {
         return result;
     }
 }
+
+// Floyd-Warshall Algorithm
+class Solution {
+    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+        int n = numCourses;
+        boolean[][] matrix = new boolean[n][n];
+        for (int[] p : prerequisites) {
+            matrix[p[0]][p[1]] = true;
+        }
+
+        // Floyd-Warshall
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = matrix[i][j] || (matrix[i][k] && matrix[k][j]);
+                }
+            }
+        }
+
+        List<Boolean> result = new ArrayList<>();
+        for (int[] query : queries) {
+            result.add(matrix[query[0]][query[1]]);
+        }
+
+        return result;
+    }
+}
