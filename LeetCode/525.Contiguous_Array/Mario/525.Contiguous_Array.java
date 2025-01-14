@@ -1,26 +1,24 @@
 class Solution {
     public int findMaxLength(int[] nums) {
-        int zero = 0, one = 0;
+        int n = nums.length;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int ones = 0, zeros = 0;
+        map.put(ones - zeros, -1);
+
         int res = 0;
-
-        Map<Integer, Integer> countIndex = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            if (num == 0) {
-                zero += 1;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 1) {
+                ones += 1;
             } else {
-                one += 1;
+                zeros += 1;
             }
 
-            if (countIndex.get(one - zero) == null) {
-                countIndex.put(one - zero, i);
-            }
-
-            if (zero == one) {
-                res = Math.max(res, zero + one);
-            } else if (countIndex.get(one - zero) != null) {
-                int index = countIndex.get(one - zero);
-                res = Math.max(res, i - index);
+            Integer idx = map.get(ones - zeros);
+            if (idx == null) {
+                map.put(ones - zeros, i);
+            } else {
+                res = Math.max(res, i - idx);
             }
         }
 
