@@ -35,8 +35,10 @@ def create_file(filename, user="Mario", extension="py"):
 
 # Example usage
 filename = input("Enter the filename: ")
-user = input("Enter the username (default is Mario): ")
-user = user if user else "Mario"
-extension = input("Enter the extension of language (default is python): ")
-extension = extension if extension else "py"
+# user = input("Enter the username (default is Mario): ")
+# user = user if user else "Mario"
+# extension = input("Enter the extension of language (default is python): ")
+# extension = extension if extension else "py"
+user = "Mario"
+extension = "py"
 create_file(filename, user, extension)
