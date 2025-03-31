@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from bisect import bisect_left
 
 
 class SegmentTree:
@@ -19,7 +18,7 @@ class SegmentTree:
         递归建树，将 data[start...end] 的信息存入 tree[idx] 中
         :param start: 当前区间的左边界
         :param end: 当前区间的右边界
-        :param idx: 当前节点在 tree 中的编号（根节点编号为 1）
+        :param idx: 当前节点在 tree 中的编号(根节点编号为 1)
         """
         if start == end:
             self.tree[idx] = self.data[start]
@@ -34,7 +33,7 @@ class SegmentTree:
     def query(self, l, r):
         """
         查询区间 [l, r] 的和
-        :param l: 查询区间左端（0-based）
+        :param l: 查询区间左端(0-based)
         :param r: 查询区间右端
         :return: 区间内所有数的和
         """
@@ -43,8 +42,6 @@ class SegmentTree:
     def _query(self, start, end, l, r, idx):
         # 当前区间完全在查询区间内
         if l <= start and end <= r:
-            print(f"l:{l} \t r:{r}")
-            print(f"start:{start} \t end:{end}")
             return self.tree[idx]
         mid = (start + end) // 2
         res = 0
@@ -59,7 +56,7 @@ class SegmentTree:
     def update(self, pos, value):
         """
         更新数组中下标 pos 的元素为 value
-        :param pos: 要更新的数组下标（0-based）
+        :param pos: 要更新的数组下标(0-based)
         :param value: 更新后的新值
         """
         self._update(0, self.n - 1, pos, value, 1)
