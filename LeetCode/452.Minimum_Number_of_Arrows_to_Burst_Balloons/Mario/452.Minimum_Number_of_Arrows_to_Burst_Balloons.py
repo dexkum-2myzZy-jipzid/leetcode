@@ -18,3 +18,19 @@ class Solution:
                 merged.append(cur)
 
         return len(merged)
+
+
+class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        # [1, 8], [7, 16] two range
+        points.sort(key=lambda x: x[1])
+
+        arrow = 1
+        arrow_pos = points[0][1]
+
+        for p in points[1:]:
+            if p[0] > arrow_pos:
+                arrow += 1
+                arrow_pos = p[1]
+
+        return arrow
