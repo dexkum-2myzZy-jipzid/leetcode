@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -8,15 +9,21 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        vals = []
+        # inorder traverse
+        self.res = None
+        self.k = k
 
-        def dfs(node):
-            if node:
-                if len(vals) == k:
-                    return
-                dfs(node.left)
-                vals.append(node.val)
-                dfs(node.right)
+        def inorder(root):
+            if not root or self.res is not None:
+                return
 
-        dfs(root)
-        return vals[k-1]
+            inorder(root.left)
+            self.k -= 1
+            if self.k == 0:
+                self.res = root.val
+                return
+            inorder(root.right)
+
+        inorder(root)
+
+        return self.res
