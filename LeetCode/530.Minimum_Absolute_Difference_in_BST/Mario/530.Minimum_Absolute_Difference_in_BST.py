@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -8,17 +7,23 @@
 #         self.right = right
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-        array = []
+        # for every node, compare node - left most max / node - right min val
+        self.res = math.inf
+        self.prev = None
 
-        def dfs(node):
-            if node:
-                dfs(node.left)
-                array.append(node.val)
-                dfs(node.right)
+        def inorder(root):
+            if not root:
+                return
 
-        dfs(root)
-        minDiff = float('inf')
-        for i in range(len(array)-1):
-            minDiff = min(minDiff, array[i+1]-array[i])
+            inorder(root.left)
 
-        return minDiff
+            if self.prev is not None:
+                # print(f"prev:{self.prev} current:{root.val}")
+                self.res = min(self.res, abs(self.prev - root.val))
+            self.prev = root.val
+
+            inorder(root.right)
+
+        inorder(root)
+
+        return self.res
