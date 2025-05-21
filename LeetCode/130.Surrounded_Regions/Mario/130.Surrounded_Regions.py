@@ -1,46 +1,49 @@
 #!/usr/bin/env python3
 
+
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
         """
-        m = len(board)
-        n = len(board[0])
-        directions = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        # traverse all the edges of board
+        # if hit '0', dfs it and makr it related,
+        # then traverse all cell, then turn '0' which not connecnted to edge turn '1'
 
-        def solveHelper(i, j):
-            if i < 0 or i >= m or j < 0 or j >= n:
+        m, n = len(board), len(board[0])
+
+        rows, cols = [0], [0]
+        if m - 1 != 0:
+            rows.append(m - 1)
+        if n - 1 != 0:
+            cols.append(n - 1)
+
+        def dfs(i, j):
+            if i < 0 or i >= m or j < 0 or j >= n or board[i][j] != "O":
                 return
 
-            if board[i][j] == "O":
-                board[i][j] = "A"
-                for a, b in directions:
-                    solveHelper(i+a, j+b)
+            board[i][j] = "#"
 
-        # check 4 sides, find "O"
-        for i in range(n):
-            if board[0][i] == "O":
-                solveHelper(0, i)
+            dfs(i - 1, j)
+            dfs(i, j - 1)
+            dfs(i + 1, j)
+            dfs(i, j + 1)
 
-        if m > 1:
-            for i in range(n):
-                if board[m-1][i] == "O":
-                    solveHelper(m-1, i)
+        # four edges
+        for i in rows:
+            for j in range(n):
+                if board[i][j] == "O":
+                    dfs(i, j)
 
         for i in range(m):
-            if board[i][0] == "O":
-                solveHelper(i, 0)
+            for j in cols:
+                if board[i][j] == "O":
+                    dfs(i, j)
 
-        if n > 1:
-            for i in range(m):
-                if board[i][n-1] == "O":
-                    solveHelper(i, n-1)
-
-        # flip "O"
+        # traverse all cells
         for i in range(m):
             for j in range(n):
                 if board[i][j] == "O":
                     board[i][j] = "X"
-                if board[i][j] == "A":
+                elif board[i][j] == "#":
                     board[i][j] = "O"
