@@ -1,53 +1,36 @@
 #!/usr/bin/env python3
-
 class Solution:
-    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    def calcEquation(
+        self, equations: List[List[str]], values: List[float], queries: List[List[str]]
+    ) -> List[float]:
+        # build graph
+        # graph: 'b': {'a': 0.5, 'c': 3.0},
 
-        edges = {}
-        divisions = {}
+        graph = defaultdict(dict)
+        for arr, val in zip(equations, values):
+            a, b = arr[0], arr[1]
+            graph[a][b] = val
+            graph[b][a] = 1.0 / val
 
-        for idx, equ in enumerate(equations):
-            i, j = equ[0], equ[1]
-            val = values[idx]
-            if i in edges:
-                edges[i].append(j)
-            else:
-                edges[i] = [j]
-
-            divisions[f"{i}/{j}"] = val
-
-            if j in edges:
-                edges[j].append(i)
-            else:
-                edges[j] = [i]
-
-            divisions[f"{j}/{i}"] = 1/val
-
-        visit = set()
-
-        def dfs(query, start):
-            a, b = query[0], query[1]
-            if a not in visit:
-                if a in edges:
-                    if b in edges[a]:
-                        val = divisions[f"{a}/{b}"]
-                        return start * val
-                    else:
-                        ans = -1.0
-                        for c in edges[a]:
-                            val = divisions[f"{a}/{c}"]
-                            visit.add(a)
-                            ans = dfs([f"{c}", b], start * val)
-                            visit.remove(a)
-                            if ans != -1.0:
-                                break
-                        return ans
-                else:
-                    return -1.0
-            else:
+        # dfs a / c : a -> b -> c
+        def dfs(a, b, visited):
+            if a not in graph or b not in graph:
                 return -1.0
+            elif a == b:
+                return 1.0
+
+            visited.add(a)
+            for c in graph[a]:
+                if c in visited:
+                    continue
+                tmp = dfs(c, b, visited)
+                if tmp != -1.0:
+                    return graph[a][c] * tmp
+
+            return -1.0
 
         res = []
-        for query in queries:
-            res.append(dfs(query, 1))
+        for a, b in queries:
+            res.append(dfs(a, b, set()))
+
         return res
