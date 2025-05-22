@@ -1,35 +1,31 @@
 #!/usr/bin/env python3
 
+
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        preMap = {i: [] for i in range(numCourses)}
-        orders = []
+        # bi -> ai
+        # topological sort kahn algo
 
-        for array in prerequisites:
-            a, b = array[0], array[1]
-            preMap[a].append(b)
+        # create graph based on prerequisite
+        graph = defaultdict(list)
+        indegree = [0] * numCourses
 
-        cycle = set()
-        visit = set()
+        for p in prerequisites:
+            a, b = p[0], p[1]
+            graph[b].append(a)
+            indegree[a] += 1
 
-        def dfs(course):
-            if course in visit:
-                return True
+        # bfs
+        q = deque([i for i in range(numCourses) if indegree[i] == 0])
+        res = []
 
-            if course in cycle:
-                return False
+        while q:
+            e = q.popleft()
+            res.append(e)
 
-            cycle.add(course)
-            for pre in preMap[course]:
-                if not dfs(pre):
-                    return False
-            cycle.remove(course)
-            visit.add(course)
-            orders.append(course)
-            return True
+            for nei in graph[e]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    q.append(nei)
 
-        for course in range(numCourses):
-            if not dfs(course):
-                return []
-
-        return orders
+        return res if len(res) == numCourses else []
