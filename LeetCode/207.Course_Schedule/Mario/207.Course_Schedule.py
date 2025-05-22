@@ -1,37 +1,31 @@
 #!/usr/bin/env python3
 
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        vertexs = []
-        edges = {}
+        # [a, b]: b -> a
+        # build graph, directed graph,
+        # toplogical sort - khan algo
 
-        for prerequisite in prerequisites:
-            course, pre = prerequisite[0], prerequisite[1]
-            vertexs.append(course)
-            if course in edges:
-                edges[course].append(pre)
-            else:
-                edges[course] = [pre]
+        indegree = [0] * numCourses
+        graph = defaultdict(list)
+        for pre in prerequisites:
+            a, b = pre[0], pre[1]  # b -> a / b -> c
+            indegree[a] += 1
+            graph[b].append(a)
 
-        visit = set()
+        q = deque()
+        for i, num in enumerate(indegree):
+            if num == 0:
+                q.append(i)
 
-        def dfs(vertex):
-            if vertex not in edges:
-                return True
+        while q:
+            cur = q.popleft()
 
-            # has cycle
-            if vertex in visit:
-                return False
+            if cur in graph:
+                for v in graph[cur]:
+                    indegree[v] -= 1
+                    if indegree[v] == 0:
+                        q.append(v)
 
-            visit.add(vertex)
-            for val in edges[vertex]:
-                if not dfs(val):
-                    return False
-            visit.remove(vertex)
-            edges[vertex] = []
-            return True
-
-        for v in vertexs:
-            if not dfs(v):
-                return False
-        return True
+        return sum(indegree) == 0
