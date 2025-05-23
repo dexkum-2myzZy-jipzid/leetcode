@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         n = len(board)
@@ -38,14 +39,52 @@ class Solution:
             num, moves = que.popleft()
 
             for i in range(1, 7):
-                nextNum = num+i
-                if nextNum <= n*n:
+                nextNum = num + i
+                if nextNum <= n * n:
                     r, c = intToPos(nextNum)
                     if board[r][c] != -1:
                         nextNum = board[r][c]
-                    if nextNum == n*n:
-                        return moves+1
+                    if nextNum == n * n:
+                        return moves + 1
                     if nextNum not in visited:
                         visited.add(nextNum)
-                        que.append([nextNum, moves+1])
+                        que.append([nextNum, moves + 1])
+        return -1
+
+
+class Solution:
+    def snakesAndLadders(self, board: List[List[int]]) -> int:
+        n = len(board)
+
+        # (n-1, 0) -> (0, 0)
+        def num2pos(num):
+            r, c = divmod(num - 1, n)
+            row = n - 1 - r
+            col = c if r % 2 == 0 else n - 1 - c
+            return row, col
+
+        q = deque([(1, 0)])  # num, rolls
+        visited = set()
+        visited.add(1)
+
+        while q:
+            num, rolls = q.popleft()
+
+            for i in range(1, 7):
+                nxt = num + i
+                if nxt > n * n:
+                    break
+
+                r, c = num2pos(nxt)
+                val = board[r][c]
+
+                if val != -1:
+                    nxt = val
+
+                if nxt not in visited:
+                    visited.add(nxt)
+                    if nxt == n * n:
+                        return rolls + 1
+                    q.append((nxt, rolls + 1))
+
         return -1
