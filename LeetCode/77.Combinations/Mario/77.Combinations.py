@@ -5,19 +5,22 @@ class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
 
         res = []
+        path = []
 
-        def backtracking(i, path):
-            if i == k:
+        def backtrack(start):
+            # print(path)
+            if len(path) == k:
                 res.append(path[:])
                 return
 
-            # select num from i+1 to n 1 -> 4 / 2 -> 4
-            for j in range(i + 1, n + 1):
-                path.append(j)
-                # print(path)
-                backtracking(j + 1, path)
+            # The loop upper bound 'n - (k - len(path)) + 2' is a pruning optimization.
+            # It ensures there are enough remaining numbers to complete a valid combination,
+            # thus reducing unnecessary recursive calls.
+            for i in range(start, n - (k - len(path)) + 2):
+                path.append(i)
+                backtrack(i + 1)
                 path.pop()
 
-        backtracking(0, [])
+        backtrack(1)
 
         return res
