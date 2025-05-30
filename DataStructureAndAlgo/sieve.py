@@ -8,7 +8,7 @@ def sieve(n):
     is_prime[0] = is_prime[1] = False  # 0 and 1 are not prime
 
     # Sieve process
-    for i in range(2, int(n**0.5) + 1):
+    for i in range(2, int(n**0.5) + 1):  # n ** 0.5 == math.sqrt(n)
         if is_prime[i]:
             for j in range(i * i, n + 1, i):  # Mark all multiples of i
                 is_prime[j] = False
