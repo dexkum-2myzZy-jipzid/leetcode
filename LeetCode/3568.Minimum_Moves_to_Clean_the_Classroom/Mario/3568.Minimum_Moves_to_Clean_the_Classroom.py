@@ -49,3 +49,63 @@ class Solution:
                         visited[key] = nen
                         queue.append((nx, ny, nen, nmask, step + 1))
         return -1
+
+
+class Solution:
+    def minMoves(self, classroom: List[str], energy: int) -> int:
+        m, n = len(classroom), len(classroom[0])
+        # state:(row, column, mask, energy)
+        # visited[row][col][mask][energy]
+        litter_dic = {}  # (i, j): int
+        litter_cnt = sx = sy = 0
+
+        for i in range(m):
+            for j in range(n):
+                if classroom[i][j] == "L":
+                    litter_dic[(i, j)] = litter_cnt
+                    litter_cnt += 1
+                elif classroom[i][j] == "S":
+                    sx, sy = i, j
+
+        # handle edge case
+        if litter_cnt == 0:
+            return 0
+
+        full_mask = (1 << litter_cnt) - 1
+        visited = [[[-1] * (full_mask + 1) for _ in range(n)] for _ in range(m)]
+
+        DIRS = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        q = deque([(sx, sy, full_mask, energy)])
+        visited[sx][sy][full_mask] = energy
+        step = 0
+
+        while q:
+            size = len(q)
+            for _ in range(size):
+                i, j, mask, e = q.popleft()
+
+                # collect all litters
+                if mask == 0:
+                    return step
+                # no energy
+                if e == 0:
+                    continue
+
+                for di, dj in DIRS:
+                    ni, nj = i + di, j + dj
+                    if 0 <= ni < m and 0 <= nj < n and classroom[ni][nj] != "X":
+                        cur = classroom[ni][nj]
+                        # reset engery
+                        new_e = energy if cur == "R" else e - 1
+                        # update mask
+                        new_m = (
+                            mask & ~(1 << litter_dic[(ni, nj)]) if cur == "L" else mask
+                        )
+                        # update visited
+                        if new_e > visited[ni][nj][new_m]:
+                            visited[ni][nj][new_m] = new_e
+                            q.append((ni, nj, new_m, new_e))
+
+            step += 1
+
+        return -1
