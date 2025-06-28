@@ -31,12 +31,13 @@ class Solution:
 class Solution:
     def isValidPalindrome(self, s: str, k: int) -> bool:
         n = len(s)
-        # dp[i][j] 表示 s[i:j+1] 最少要删几个变成回文
+        # dp[i][j]: minimum characters to remove so that s[i:j] is a palindrome
         dp = [[0] * n for _ in range(n)]
 
-        for length in range(2, n + 1):  # length 是区间长度
-            for i in range(n - length + 1):
-                j = i + length - 1
+        # l: length
+        for l in range(2, n + 1):
+            for i in range(n - l + 1):  # 10-2+1 = 8, [0, 9) i = 8
+                j = i + l - 1  # 8 + 2 - 1 = 9
                 if s[i] == s[j]:
                     dp[i][j] = dp[i + 1][j - 1]
                 else:
