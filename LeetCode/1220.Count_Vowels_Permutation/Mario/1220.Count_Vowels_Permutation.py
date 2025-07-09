@@ -51,7 +51,7 @@ class Solution:
 
         MOD = 10**9 + 7
 
-        a, e, i, o, u = 1, 1, 1, 1, 1  # 用 i 避免和下标冲突
+        a, e, i, o, u = 1, 1, 1, 1, 1
 
         for _ in range(1, n):
             aa = (e + i + u) % MOD  # a <- e, i, u
