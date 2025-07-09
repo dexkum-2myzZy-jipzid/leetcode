@@ -27,23 +27,24 @@ class Solution:
         # no two adjacent houses have the same color.
 
         m, n = len(costs), len(costs[0])
-        dp = [[0] * n for _ in range(m + 1)]
 
         pre_min0, pre_min1 = (0, -1), (0, -1)
-        for i in range(1, m + 1):
+
+        for i in range(m):
             cur_min0, cur_min1 = (inf, -1), (inf, -1)
             for j in range(n):
-                cost = costs[i - 1][j]
+                cost = costs[i][j]
+                cur_cost = 0
                 if pre_min0[1] != j:
-                    dp[i][j] = cost + pre_min0[0]
+                    cur_cost = cost + pre_min0[0]
                 else:
-                    dp[i][j] = cost + pre_min1[0]
+                    cur_cost = cost + pre_min1[0]
 
-                if dp[i][j] <= cur_min0[0]:
-                    cur_min1, cur_min0 = cur_min0, (dp[i][j], j)
-                elif dp[i][j] < cur_min1[0]:
-                    cur_min1 = (dp[i][j], j)
+                if cur_cost <= cur_min0[0]:
+                    cur_min1, cur_min0 = cur_min0, (cur_cost, j)
+                elif cur_cost < cur_min1[0]:
+                    cur_min1 = (cur_cost, j)
 
             pre_min0, pre_min1 = cur_min0, cur_min1
 
-        return min(dp[m])
+        return pre_min0[0]
