@@ -24,3 +24,23 @@ class Solution:
         # print(dp)
 
         return dp[n - 1][k][0]
+
+
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        # max profit, at most k transaction
+
+        n = len(prices)
+        buy, sell = [-inf] * k, [0] * k
+
+        # init dp
+        buy[0] = -prices[0]
+
+        for i in range(1, n):
+            buy[0] = max(buy[0], -prices[i])
+            sell[0] = max(sell[0], buy[0] + prices[i])
+            for j in range(1, k):
+                buy[j] = max(buy[j], sell[j - 1] - prices[i])
+                sell[j] = max(sell[j], buy[j] + prices[i])
+
+        return max(sell)
