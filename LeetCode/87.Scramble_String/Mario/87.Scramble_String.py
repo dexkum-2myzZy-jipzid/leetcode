@@ -16,8 +16,8 @@ class Solution:
                 no_swap = dfs(a[:i], b[:i]) and dfs(a[i:], b[i:])
                 if no_swap:
                     return True
-                # s => s[0:i] + s[i:n] -> s[i:n] + s[0:i]
-                swap = dfs(a[:i], b[-i:]) and dfs(a[i:], b[:-i])
+                # s1[0:i] vs s2[n-i:n]
+                swap = dfs(a[:i], b[n - i :]) and dfs(a[i:], b[: n - i])
                 if swap:
                     return True
             return False
