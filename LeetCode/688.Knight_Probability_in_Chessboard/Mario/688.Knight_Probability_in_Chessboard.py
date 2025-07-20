@@ -41,10 +41,10 @@ class Solution:
 
         # print(dp)
 
-        res = 0
-        for key in dp[k]:
-            r, c = key
-            p = dp[k][key]
-            res += p
+        # res = 0
+        # for key in dp[k]:
+        #     r, c = key
+        #     p = dp[k][key]
+        #     res += p
 
-        return res
+        return sum(e for e in dp[k].values())
