@@ -31,3 +31,23 @@ class Solution:
         dfs(0, 0)
 
         return res
+
+
+class Solution:
+    def maximumRequests(self, n: int, requests: List[List[int]]) -> int:
+        m = len(requests)
+        res = 0
+
+        for mask in range(1 << m):
+            delta = [0] * n
+            count = 0
+            for i, req in enumerate(requests):
+                if (mask >> i) & 1:  # if true, means take ith requests
+                    f, t = req
+                    delta[f] -= 1
+                    delta[t] += 1
+                    count += 1
+            if all(d == 0 for d in delta):
+                res = max(res, count)
+
+        return res
