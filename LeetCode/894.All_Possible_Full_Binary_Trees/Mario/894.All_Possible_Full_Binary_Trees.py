@@ -10,7 +10,7 @@
 class Solution:
     def allPossibleFBT(self, n: int) -> List[Optional[TreeNode]]:
         # full binary tree is a binary tree where each node has exactly 0 or 2 children.
-
+        @cache
         def build_FBT(start, end):
             # print(start, end)
             res = []
