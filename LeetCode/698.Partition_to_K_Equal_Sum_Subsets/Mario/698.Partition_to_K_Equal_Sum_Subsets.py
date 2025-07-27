@@ -42,3 +42,46 @@ class Solution:
             return False
 
         return dfs(0, k, 0)
+
+
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        # num, k
+        # divide nums into k subsets, every sum of subset is n
+        # backtrack
+
+        total = sum(nums)
+        if total % k != 0:
+            return False
+
+        n = len(nums)
+        target = total // k
+
+        nums.sort(reverse=True)
+        if nums[0] > target:
+            return False
+
+        mask = 0
+
+        def backtrack(i, k, cur_sum):
+            nonlocal mask
+            # all buckets filled and all nums are used
+            if k == 0 and mask == (1 << n) - 1:
+                return True
+
+            if cur_sum == target:
+                return backtrack(0, k - 1, 0)
+
+            for j in range(i, n):
+                if not (mask & (1 << j)) and cur_sum + nums[j] <= target:
+                    mask |= 1 << j
+                    if backtrack(j + 1, k, cur_sum + nums[j]):
+                        return True
+                    mask = mask ^ (1 << j)
+
+                    if cur_sum == 0:
+                        return False
+
+            return False
+
+        return backtrack(0, k, 0)
