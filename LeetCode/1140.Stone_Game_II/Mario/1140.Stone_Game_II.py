@@ -33,3 +33,31 @@ class Solution:
         alice = (sum(piles) + diff) // 2
 
         return alice
+
+
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        # dfs(ith stones, M) return stone
+
+        n = len(piles)
+        suffix_sum = [0] * (n + 1)
+        for i in range(n - 1, -1, -1):
+            suffix_sum[i] = suffix_sum[i + 1] + piles[i]
+        print(suffix_sum)
+
+        @cache
+        def dfs(i, M):
+            if i >= n:
+                return 0
+
+            res = 0
+            for X in range(1, 2 * M + 1):  # [1, 2 * M]
+                if i + X > n:
+                    break
+                stone = suffix_sum[i] - suffix_sum[i + X]
+                next_diff = dfs(i + X, max(M, X))
+                res = max(res, stone + suffix_sum[i + X] - next_diff)
+
+            return res
+
+        return dfs(0, 1)
