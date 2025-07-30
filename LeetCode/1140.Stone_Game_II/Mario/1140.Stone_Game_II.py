@@ -37,27 +37,24 @@ class Solution:
 
 class Solution:
     def stoneGameII(self, piles: List[int]) -> int:
-        # dfs(ith stones, M) return stone
-
         n = len(piles)
+        # 预处理后缀和
         suffix_sum = [0] * (n + 1)
         for i in range(n - 1, -1, -1):
             suffix_sum[i] = suffix_sum[i + 1] + piles[i]
-        print(suffix_sum)
 
-        @cache
-        def dfs(i, M):
+        @lru_cache(None)
+        def dp(i, M):
             if i >= n:
                 return 0
-
+            # 如果可以全部拿完
+            if i + 2 * M >= n:
+                return suffix_sum[i]
+            # 枚举每种可能的取法
             res = 0
-            for X in range(1, 2 * M + 1):  # [1, 2 * M]
-                if i + X > n:
-                    break
-                stone = suffix_sum[i] - suffix_sum[i + X]
-                next_diff = dfs(i + X, max(M, X))
-                res = max(res, stone + suffix_sum[i + X] - next_diff)
-
+            for X in range(1, 2 * M + 1):
+                # 拿X堆，对手接下来最多能拿 dp(i + X, max(M, X))
+                res = max(res, suffix_sum[i] - dp(i + X, max(M, X)))
             return res
 
-        return dfs(0, 1)
+        return dp(0, 1)
