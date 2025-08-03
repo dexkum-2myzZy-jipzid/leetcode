@@ -6,53 +6,36 @@ class Solution:
     def minCost(
         self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int
     ) -> int:
-        # a row of m houses
-        # neighborhoods
-        # house: i color, 0 no painted
-        # cost: i house, j+1 color
-        # min cost: all remaining houses target neigh, if not -1
+        # dp[i][j][k] represents minimum cost for first i houses, k neighborhoods, ith house with color j
+        # Transition:
+        # 1. Same color as previous: dp[i][j][k] = dp[i-1][j][k] + cost[i][j]
+        # 2. Different color: dp[i][j][k] = min(dp[i-1][x][k-1]) + cost[i][j] for all x != j
 
-        # state: cost: ith house with j color, k group
-        # dp[i][j][k] = score
-        # if ith house, has j color, dp[i][j-1][k] = 0
-        # if ith house: no painted, dp[i][x] x in [0, n]
+        dp = [[[inf] * (target + 1) for _ in range(n + 1)] for _ in range(m + 1)]
 
-        dp = [[[inf] * target for _ in range(n)] for _ in range(m)]
+        # 0 houses, 0 color, 0 neigh
+        dp[0][0][0] = 0
 
-        # init dp
-        if houses[0] != 0:
-            dp[0][houses[0] - 1][0] = 0
-        else:
-            for i, c in enumerate(cost[0]):
-                dp[0][i][0] = c
-
-        # print(dp)
-        for i in range(1, m):
-            color = houses[i]
-            for j in range(n):
-                if color != 0 and color - 1 != j:
+        for i in range(1, m + 1):
+            house = houses[i - 1]
+            for j in range(1, n + 1):
+                # house was painted
+                if house != 0 and house != j:
                     continue
-                for k in range(target):
-                    # same color as previous house
-                    if dp[i - 1][j][k] != inf:
-                        val = dp[i - 1][j][k]
-                        if color == 0:
-                            val += cost[i][j]
-                        dp[i][j][k] = min(dp[i][j][k], val)
-                    # different color, new neighborhood
-                    if k > 0:
-                        for jj in range(n):
-                            if jj == j:
-                                continue
-                            if dp[i - 1][jj][k - 1] != inf:
-                                val = dp[i - 1][jj][k - 1]
-                                if color == 0:
-                                    val += cost[i][j]
-                                dp[i][j][k] = min(dp[i][j][k], val)
+
+                cur_cost = 0 if house > 0 and house == j else cost[i - 1][j - 1]
+                for jj in range(n + 1):
+                    for k in range(1, min(target, i) + 1):
+                        # same color as previous
+                        if jj == j:
+                            dp[i][j][k] = min(dp[i][j][k], dp[i - 1][jj][k] + cur_cost)
+                        else:  # diff color
+                            dp[i][j][k] = min(
+                                dp[i][j][k], dp[i - 1][jj][k - 1] + cur_cost
+                            )
 
         res = inf
-        for j in range(n):
-            if dp[m - 1][j][target - 1] < res:
-                res = dp[m - 1][j][target - 1]
+        for j in range(1, n + 1):
+            res = min(res, dp[m][j][target])
 
-        return -1 if res == inf else res
+        return res if res != inf else -1
