@@ -3,39 +3,36 @@
 
 class Solution:
     def cherryPickup(self, grid: List[List[int]]) -> int:
+        # dp[row][rob1][rob2] represents max num of cherries both robots will take from top to row grid
+        # dp[i][j][k] from 3 directions
+        # dp[i][j][k] = grid[i][j] + grid[i][k] + max(dp[i-1][j+dj][k+dk])
+        # where dj, dk in [-1, 0, 1] (9 combinations total)
+        # Note: if j == k, only count grid[i][j] once
+
         m, n = len(grid), len(grid[0])
 
-        # dp[row][col1][col2]
         dp = [[[-1] * n for _ in range(n)] for _ in range(m)]
 
+        # init
         dp[0][0][n - 1] = grid[0][0] + grid[0][n - 1]
 
-        for i in range(1, m):  # row
-            for j in range(n):  # robot1 col
-                for k in range(n - 1, -1, -1):  # robot2 col
-                    cherries = grid[i][j]
-                    if j != k:
-                        cherries += grid[i][k]
+        for i in range(1, m):
+            for j in range(n):
+                for k in range(n - 1, -1, -1):
+                    cherries = grid[i][j] + grid[i][k]
+                    if j == k:
+                        cherries >>= 1
 
-                    max_pre = -1
                     for dj in [-1, 0, 1]:
                         for dk in [-1, 0, 1]:
-                            pj, pk = j + dj, k + dk
+                            nj, nk = j + dj, k + dk
 
-                            # filter invalid case
-                            if 0 <= pj < n and 0 <= pk < n and dp[i - 1][pj][pk] != -1:
-                                max_pre = max(max_pre, dp[i - 1][pj][pk])
+                            # fliter invalid case
+                            if 0 <= nj < n and 0 <= nk < n and dp[i - 1][nj][nk] != -1:
+                                dp[i][j][k] = max(
+                                    dp[i][j][k], cherries + dp[i - 1][nj][nk]
+                                )
 
-                    if max_pre != -1:
-                        dp[i][j][k] = cherries + max_pre
-
-        result = 0
-        for col1 in range(n):
-            for col2 in range(n):
-                if dp[m - 1][col1][col2] != -1:
-                    result = max(result, dp[m - 1][col1][col2])
-
-        # for row in dp:
-        #     print(row)
-
-        return result
+        return max(
+            dp[m - 1][i][j] for i in range(n) for j in range(n) if dp[m - 1][i][j] != -1
+        )
