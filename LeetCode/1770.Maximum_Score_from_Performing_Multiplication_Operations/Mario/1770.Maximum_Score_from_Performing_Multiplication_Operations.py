@@ -24,3 +24,29 @@ class Solution:
                     dp[i][left] = max(dp[i][left], dp[i - 1][left] + nums[-right] * y)
 
         return max(dp[m][j] for j in range(m + 1) if dp[m][j] != -inf)
+
+
+# dfs
+class Solution:
+    def maximumScore(self, nums: List[int], multipliers: List[int]) -> int:
+
+        n, m = len(nums), len(multipliers)
+
+        # i:left, j:right
+        @cache
+        def dfs(i, j):
+            k = i + j
+            if k >= m:
+                return 0
+
+            mul = multipliers[k]
+
+            # take left
+            left = dfs(i + 1, j) + nums[i] * mul
+
+            # take right
+            right = dfs(i, j + 1) + nums[-(j + 1)] * mul
+
+            return max(left, right)
+
+        return dfs(0, 0)
