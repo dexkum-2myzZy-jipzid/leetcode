@@ -3,71 +3,66 @@
 
 class Solution:
     def canCross(self, stones: List[int]) -> bool:
-        # may or not exist a stone
-        # stones pos asecnding order
-        # first jump 1 unit
-        # last k, next k-1, k, k+1
-
-        # 1 2 3 4 5 6 7  8
-        # 0 1 3 5 6 8 12 17
-        # 1 1.2 2   3 4  5
-        # [0,1,2,3,4,8,9,11]
-
-        # dp[i][j] = k, means i jump to j, previous max unit is k
+        # dp[i] = {k} represents set of possible step sizes to reach stone i
+        # For each stone i and each step k in dp[i]:
+        #   next_stones = stones[i] + (k-1), stones[i] + k, stones[i] + (k+1)
+        #   if next_stone in stones: dp[stone_index[next_stone]].add(step_size)
+        # Return len(dp[n-1]) > 0
 
         n = len(stones)
-        dp = [[-1] * n for _ in range(n)]
-
-        dic = defaultdict(int)
-        for i, val in enumerate(stones):
-            dic[val] = i
-
-        k = 1
-        # init dp
-        if k in dic:
-            dp[0][dic[k]] = 1
-        else:
-            # first jump can't reach any stone
-            return False
+        idx_map = {s: i for i, s in enumerate(stones)}
+        dp = [set() for _ in range(n)]
+        dp[0] = {0}
 
         for i in range(n):
-            for j in range(i + 1, n):
-                if dp[i][j] == -1:
-                    continue
-                else:
-                    k = dp[i][j]
-                    val = stones[j]
-                    for s in [k - 1, k, k + 1]:
-                        if val + s in dic:
-                            idx = dic[val + s]
-                            dp[j][idx] = s
+            cur = stones[i]
+            for k in dp[i]:
+                for dk in [-1, 0, 1]:
+                    next_stone = cur + k + dk
+                    if next_stone > cur and next_stone in idx_map:
+                        dp[idx_map[next_stone]].add(k + dk)
 
-        res = False
-        for i in range(n):
-            if dp[i][n - 1] > 0:
-                res = True
-
-        return res
+        return len(dp[n - 1]) > 0
 
 
+# dfs
 class Solution:
     def canCross(self, stones: List[int]) -> bool:
-        # dp[i] = set(), contains k steps reach i
+        # k = 1, next_k in [k-1, k, k+1]
+        # return if the frog can cross the river by landing on the last stone.
+        # stones = [0,1,3,5,6,8,12,17]
+        # stone: 0 -> 1 -> 3 -> 5 -> 8 -> 12 -> 17
+        # unit:    1.   2.   2.   3.   4.    5
+
+        # def dfs(i, j) 0, 1
+        # three options:
+        # stones[i] + j (j in [[k-1, k, k+1]]) in stones_idx_map
+        # then dfs(next_i, j)
+        # if next_i == n-1 return True
+
         n = len(stones)
-        idx_map = {x: i for i, x in enumerate(stones)}
+        idx_map = {v: i for i, v in enumerate(stones)}
 
-        dp = [set() for _ in range(n)]
+        @cache
+        def dfs(i, j):
+            # stone not in stones | frog must jump forward
+            if i >= n or j <= 0:
+                return False
 
-        dp[0].add(0)
+            # reach last stone
+            if i == n - 1:
+                return True
 
-        for i in range(n):
-            for k in dp[i]:
-                for step in [k - 1, k, k + 1]:
-                    if step <= 0:
-                        continue
-                    val = stones[i] + step
-                    if val in idx_map:
-                        j = idx_map[val]
-                        dp[j].add(step)
+            # next stone
+            cur = stones[i] + j
+            if cur not in idx_map:
+                return False
 
-        return len(dp[-1]) > 0
+            # 3 options
+            for dj in [-1, 0, 1]:
+                if dfs(idx_map[cur], j + dj):
+                    return True
+
+            return False
+
+        return dfs(0, 1)
