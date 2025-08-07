@@ -1,46 +1,41 @@
 #!/usr/bin/env python3
 
+from typing import List
+
 
 class Solution:
     def countRoutes(
         self, locations: List[int], start: int, finish: int, fuel: int
     ) -> int:
-        # location[i] = city i
-        # if i, pick j, i != j
-        # fuel = abs(loca[i] - loca[j])
-        # fule [1, 200]
-
+        # fule = abs(location[i] - location[j])
         # [2,3,6,8,4]
-        # . 0,1,2,3,4
-        # 3 -> 8
+        #  0 1 2 3 4
 
-        # dp[fuel][i] count of routes start from i city with fuel
-
-        # dp[fuel][i] = for j in locations: next_fuel = abs(location[i] - locations[j]) dp[next_fuel][j]
+        # dp[i][k] represents the count of routes when arrived at ith city with k fuel remaining
+        # for next_city j in range(n):
+        #   if k >= abs(location[i] - location[j]):
+        #       dp[j][k-cost] += dp[i][k]
 
         MOD = 10**9 + 7
         n = len(locations)
-        dp = [[0] * n for _ in range(fuel + 1)]
+        dp = [[0] * (fuel + 1) for _ in range(n)]
 
         # init dp
-        dp[0][start] = 1
+        dp[start][fuel] = 1
 
-        for f in range(fuel + 1):
+        for k in range(fuel, 0, -1):
             for i in range(n):
-                if dp[f][i] > 0:
-                    for j, loc in enumerate(locations):
-                        if i == j:
-                            continue
-                        else:
-                            need_f = abs(locations[i] - loc)
-                            if (f + need_f) <= fuel:
-                                dp[f + need_f][j] = (dp[f + need_f][j] + dp[f][i]) % MOD
+                if dp[i][k] == 0:
+                    continue
+
+                for j in range(n):
+                    if i == j:
+                        continue
+                    cost = abs(locations[i] - locations[j])
+                    if k >= cost:
+                        dp[j][k - cost] = (dp[j][k - cost] + dp[i][k]) % MOD
 
         # for r in dp:
-        #     print(dp)
+        #     print(r)
 
-        res = 0
-        for f in range(fuel + 1):
-            res = (res + dp[f][finish]) % MOD
-
-        return res
+        return sum(dp[finish]) % MOD
