@@ -59,8 +59,10 @@ class Solution:
         # i: index of target, j: index of column in word
         @cache
         def dfs(i, j):
+            # Base case: matched all characters in target
             if i == m:
                 return 1
+            # Base case: ran out of columns but still have characters left in target
             if j == n:
                 return 0
 
