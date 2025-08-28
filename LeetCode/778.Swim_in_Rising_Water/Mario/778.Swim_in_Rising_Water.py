@@ -1,38 +1,48 @@
 #!/usr/bin/env python3
 
+import heapq
+from typing import List
+from math import inf
+from collections import deque
+from functools import cache
+
 
 # Dijkstra
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        # Dijkstra algo
+        # dijstra
         n = len(grid)
 
-        heap = [(grid[0][0], 0, 0)]
-        # mark grid[0][0] visited
-        grid[0][0] = -1
-        DIRS = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        times = [[inf] * n for _ in range(n)]
 
-        res = inf
+        heap = [(grid[0][0], 0, 0)]  # (t, r, c)
+        times[0][0] = grid[0][0]
+
+        DIRS = [(0, 1), (1, 0), (-1, 0), (0, -1)]
 
         while heap:
-            t, i, j = heapq.heappop(heap)
-            # print(f"i: {i} j:{j} t:{t}")
+            t, r, c = heapq.heappop(heap)
 
-            if i == n - 1 and j == n - 1:
-                return t
-
-            # no need to continue
-            if res != inf and t >= res:
+            if t > times[r][c]:
                 continue
 
-            for dx, dy in DIRS:
-                nx, ny = i + dx, j + dy
-                if 0 <= nx < n and 0 <= ny < n and grid[nx][ny] != -1:
-                    nxt_t = max(grid[nx][ny], t)
-                    grid[nx][ny] = -1
-                    heapq.heappush(heap, (nxt_t, nx, ny))
+            if r == n - 1 and c == n - 1:
+                return t
 
-        return res
+            for dr, dc in DIRS:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < n and 0 <= nc < n:
+                    nt = max(t, grid[nr][nc])
+                    if nt < times[nr][nc]:
+                        times[nr][nc] = nt
+                        heapq.heappush(heap, (nt, nr, nc))
+
+                        # print(f"nr:{nr} nc:{nc} grid:{grid[nr][nc]}")
+                        # print(f"heap:{heap}")
+                        # for row in times:
+                        #     print(row)
+                        # print()
+        return inf
 
 
 # binary search
