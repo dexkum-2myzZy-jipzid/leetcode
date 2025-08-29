@@ -1,5 +1,6 @@
 from typing import List, Tuple, Optional, Set
 from math import inf
+import heapq
 
 Edge = Tuple[int, int, float]  # (u, v, w)
 
@@ -45,7 +46,7 @@ def floyd_warshall(
     directed: bool = True,
 ) -> Tuple[List[List[int]], List[List[Optional[int]]], Set[int]]:
     """
-    Floyd–Warshall with path reconstruction.
+    Floyd-Warshall with path reconstruction.
       - n: number of nodes (0..n-1)
       - edges: list of (u, v, w)
       - directed: treat edges as directed if True
@@ -88,3 +89,43 @@ def floyd_warshall(
     neg_cycle_nodes: Set[int] = {i for i in range(n) if dist[i][i] < 0}
 
     return dist, nxt, neg_cycle_nodes
+
+
+# MST
+def mst_kruskal(n, edges):
+    """
+    n: 节点数，节点编号为 [0..n-1]
+    edges: 列表 [(w, u, v)], 已0-index
+    返回: 最小总成本；若不连通，返回 -1
+    """
+    dsu = DSU(n)
+    cost, taken = 0, 0
+    for w, u, v in sorted(edges):
+        if dsu.union(u, v):
+            cost += w
+            taken += 1
+            if taken == n - 1:
+                return cost
+    return -1
+
+
+def mst_prim_adj(n, adj):
+    """
+    n: 节点数
+    adj: 邻接表, adj[u] = [(w, v), ...]
+    返回: 最小总成本；若不连通，返回 -1
+    """
+    visited = [False] * n
+    pq = [(0, 0)]  # (边权, 目标点)
+    cost, count = 0, 0
+    while pq and count < n:
+        w, v = heapq.heappop(pq)
+        if visited[v]:
+            continue
+        visited[v] = True
+        cost += w
+        count += 1
+        for w2, to in adj[v]:
+            if not visited[to]:
+                heapq.heappush(pq, (w2, to))
+    return cost if count == n else -1
