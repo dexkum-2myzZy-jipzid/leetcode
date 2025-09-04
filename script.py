@@ -20,12 +20,12 @@ def create_file(filename, user="Mario", extension="py"):
     # Step 5: Create the file
     file_extension = extension
     file_path = f"{directory}/{filename}.{file_extension}"
-    with open(file_path, 'w') as file:
+    with open(file_path, "w") as file:
         pass
 
     # If the file is a Python script, add the shebang line
     if file_extension == "py":
-        with open(file_path, 'r+') as file:
+        with open(file_path, "r+") as file:
             content = file.read()
             file.seek(0, 0)
             file.write("#!/usr/bin/env python3\n" + content)
@@ -40,5 +40,5 @@ filename = input("Enter the filename: ")
 # extension = input("Enter the extension of language (default is python): ")
 # extension = extension if extension else "py"
 user = "Mario"
-extension = "py"
+extension = "swift"
 create_file(filename, user, extension)
