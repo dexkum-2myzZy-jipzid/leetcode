@@ -1,3 +1,5 @@
+
+// iterative
 class Solution {
     func myPow(_ x: Double, _ n: Int) -> Double {
         if n == 0 { return 1.0 }
@@ -20,5 +22,19 @@ class Solution {
         }
 
         return res
+    }
+}
+
+// recursive
+class Solution2 {
+    func myPow(_ x: Double, _ n: Int) -> Double {
+        if n == 0 { return 1.0 }
+        if n < 0 { return 1.0 / myPow(x, -n) }
+
+        if n & 1 == 1 {
+            return x * myPow(x * x, (n - 1) / 2)
+        } else {
+            return myPow(x * x, n / 2)
+        }
     }
 }
