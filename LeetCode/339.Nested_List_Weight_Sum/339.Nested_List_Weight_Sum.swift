@@ -63,3 +63,27 @@ class Solution {
         return res
     }
 }
+
+class Solution {
+    func depthSum(_ nestedList: [NestedInteger]) -> Int {
+        var q: [(NestedInteger, Int)] = []
+        for e in nestedList {
+            q.append((e, 1))
+        }
+        var head = 0
+        var res = 0
+        while head < q.count {
+            let (e, depth) = q[head]
+            head += 1
+            if e.isInteger() {
+                res += e.getInteger() * depth
+            } else {
+                let lst = e.getList()
+                for sub in lst {
+                    q.append((sub, depth + 1))
+                }
+            }
+        }
+        return res
+    }
+}
