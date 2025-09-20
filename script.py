@@ -3,7 +3,7 @@
 import os
 
 
-def create_file(filename, user="Mario", extension="py"):
+def create_file(filename, extension="py"):
     # Step 2: Replace spaces with underscores
     filename = filename.replace(" ", "_")
 
@@ -13,7 +13,7 @@ def create_file(filename, user="Mario", extension="py"):
     print(f"filename:{filename}")
 
     # Step 4: Create the directory
-    directory = f"LeetCode/{filename}/{user}"
+    directory = f"LeetCode/{filename}"
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -39,6 +39,6 @@ filename = input("Enter the filename: ")
 # user = user if user else "Mario"
 # extension = input("Enter the extension of language (default is python): ")
 # extension = extension if extension else "py"
-user = "Mario"
+# user = "Mario"
 extension = "swift"
-create_file(filename, user, extension)
+create_file(filename, extension)
