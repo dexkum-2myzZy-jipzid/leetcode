@@ -20,15 +20,15 @@ def create_file(filename, extension="py"):
     # Step 5: Create the file
     file_extension = extension
     file_path = f"{directory}/{filename}.{file_extension}"
-    with open(file_path, "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         pass
 
-    # If the file is a Python script, add the shebang line
+    # If the file is a Python script, add the shebang line and UTF-8 coding header
     if file_extension == "py":
-        with open(file_path, "r+") as file:
+        with open(file_path, "r+", encoding="utf-8") as file:
             content = file.read()
             file.seek(0, 0)
-            file.write("#!/usr/bin/env python3\n" + content)
+            file.write("#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n" + content)
 
     return f"File created at {file_path}"
 
