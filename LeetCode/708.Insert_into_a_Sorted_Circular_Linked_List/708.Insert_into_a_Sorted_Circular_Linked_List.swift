@@ -33,28 +33,29 @@ class Solution {
         var prev: Node? = head.next, curr: Node? = head
         var insert = false
 
-        while let p = prev, let c = curr {
+        repeat {
+            guard let p = prev, let c = curr else { break }
+
             // prev.val > insertVal >= curr.val
             if c.val <= insertVal, insertVal < p.val {
-                c.next = insertNode
-                insertNode.next = p
                 insert = true
-                break
             }
 
             // insertVal >= all vals in linked list / <= all vals in linked list
             if p.val < c.val, insertVal <= p.val || insertVal >= c.val {
+                insert = true
+            }
+
+            if insert {
                 c.next = insertNode
                 insertNode.next = p
-                insert = true
                 break
             }
 
             prev = p.next
             curr = c.next
 
-            if curr == head { break }
-        }
+        } while curr != head
 
         if !insert {
             curr?.next = insertNode
