@@ -50,3 +50,39 @@ class Solution {
         }
     }
 }
+
+// heap
+extension ListNode: Comparable {
+    public static func < (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs.val < rhs.val
+    }
+
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs.val == rhs.val
+    }
+}
+
+class Solution {
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        var heap = Heap<ListNode>()
+        for list in lists {
+            if let node = list {
+                heap.insert(node)
+            }
+        }
+
+        let dummy = ListNode(-1)
+        var cur: ListNode? = dummy
+
+        while let node = heap.popMin() {
+            cur?.next = node
+            cur = cur?.next
+            if let next = node.next {
+                heap.insert(next)
+            }
+        }
+        cur?.next = nil
+
+        return dummy.next
+    }
+}
