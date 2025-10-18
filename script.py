@@ -37,8 +37,7 @@ def create_file(filename, extension="py"):
 filename = input("Enter the filename: ")
 # user = input("Enter the username (default is Mario): ")
 # user = user if user else "Mario"
-# extension = input("Enter the extension of language (default is python): ")
-# extension = extension if extension else "py"
+extension = input("Enter the extension of language (default is python): ")
+extension = extension if extension else "py"
 # user = "Mario"
-extension = "swift"
 create_file(filename, extension)
