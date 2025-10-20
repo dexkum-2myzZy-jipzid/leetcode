@@ -30,3 +30,37 @@ class Logger:
 # Your Logger object will be instantiated and called as such:
 # obj = Logger()
 # param_1 = obj.shouldPrintMessage(timestamp,message)
+
+
+# using set and deque
+class Logger:
+
+    # self.deque = [] && self.seen = set()
+    # self.deque (time, message)
+    # self.deque first element,
+    # timestamp >= first_element_time + 10
+    # pop element, also, remove message from seen
+    # if timestamp < first_element_time + 10:
+    # if message in seen, it will return false,
+
+    def __init__(self):
+        self.queue = deque()
+        self.seen = set()
+
+    def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
+        # maintain this queue window, only contains message in [current_time-10, current_time]
+        while self.queue and self.seen and (self.queue[0][0] + 10) <= timestamp:
+            _, first_message = self.queue.popleft()
+            self.seen.remove(first_message)
+
+        if message in self.seen:
+            return False
+        else:
+            self.queue.append((timestamp, message))
+            self.seen.add(message)
+            return True
+
+
+# Your Logger object will be instantiated and called as such:
+# obj = Logger()
+# param_1 = obj.shouldPrintMessage(timestamp,message)
