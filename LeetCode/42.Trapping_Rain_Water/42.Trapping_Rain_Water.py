@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import heapq
 from typing import List
 
 
@@ -28,10 +29,7 @@ class Solution:
 
 
 # heap & bfs
-import heapq
-
-
-class Solution:
+class Solution2:
     def trap(self, height: List[int]) -> int:
         # heap + bfs
         n = len(height)
@@ -61,3 +59,31 @@ class Solution:
                     heapq.heappush(heap, (max(cur, height[ni]), ni))
 
         return res
+
+
+# two pointers
+class Solution3:
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        left, right = 0, n - 1
+        left_max = right_max = 0
+        water = 0
+
+        # for each position,  min(left_max, right_max) - current_height
+
+        while left < right:
+            if height[left] < height[right]:
+                if height[left] > left_max:
+                    left_max = height[left]
+                else:
+                    water += left_max - height[left]
+                left += 1
+            else:
+                if height[right] > right_max:
+                    right_max = height[right]
+                else:
+                    water += right_max - height[right]
+
+                right -= 1
+
+        return water
