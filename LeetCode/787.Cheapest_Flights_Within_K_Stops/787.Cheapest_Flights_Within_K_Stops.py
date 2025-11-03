@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from math import inf
+import heapq
+from collections import defaultdict
 
 
 class Solution:
     def findCheapestPrice(
-        self, n: int, flights: List[List[int]], src: int, dst: int, k: int
+        self, n: int, flights: list[list[int]], src: int, dst: int, k: int
     ) -> int:
         # edge case
         if src == dst:
@@ -29,4 +34,41 @@ class Solution:
             if not updated:
                 break
 
-        return min_dis[dst] if min_dis[dst] != inf else -1
+        # ensure return type is int
+        if min_dis[dst] != inf:
+            return int(min_dis[dst])
+        else:
+            return -1
+
+
+# Dijkstra algo
+class Solution2:
+    def findCheapestPrice(
+        self, n: int, flights: list[list[int]], src: int, dst: int, k: int
+    ) -> int:
+        graph = defaultdict(list)
+        for v, u, p in flights:
+            graph[v].append((u, p))
+
+        heap = [(0, src, 0)]
+        best = [[inf] * (k + 2) for _ in range(n)]
+        best[src][0] = 0
+
+        while heap:
+            price, curr, stops = heapq.heappop(heap)
+
+            if curr == dst:
+                return price
+
+            # more than k stops, cut off branch
+            if stops >= k + 1:
+                continue
+
+            for nei, p in graph[curr]:
+                nprice = price + p
+                nstops = stops + 1
+                if best[nei][nstops] > nprice:
+                    best[nei][nstops] = nprice
+                    heapq.heappush(heap, (nprice, nei, nstops))
+
+        return -1
