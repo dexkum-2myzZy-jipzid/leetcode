@@ -1,27 +1,34 @@
 #!/usr/bin/env python3
-
 import heapq
 
 
 class MedianFinder:
+
+    # heap, max heap, min heap
+    # arr = [2,3,4]
+    # low = [-2] # max heap (negative)
+    # high = [3, 4] # min heap
+
     def __init__(self):
-        self.left = []  # 最大堆（用负数模拟）
-        self.right = []  # 最小堆
+        self.low, self.high = [], []
 
     def addNum(self, num: int) -> None:
-        if not self.left or num <= -self.left[0]:
-            heapq.heappush(self.left, -num)
-        else:
-            heapq.heappush(self.right, num)
+        heapq.heappush(self.low, -num)
+        heapq.heappush(self.high, -heapq.heappop(self.low))
 
-        # 调整两堆平衡
-        if len(self.left) > len(self.right) + 1:
-            heapq.heappush(self.right, -heapq.heappop(self.left))
-        elif len(self.right) > len(self.left):
-            heapq.heappush(self.left, -heapq.heappop(self.right))
+        # balance, make sure len(self.high) == (len(self.low) or len(self.low) + 1)
+        if len(self.high) > len(self.low) + 1:
+            heapq.heappush(self.low, -heapq.heappop(self.high))
 
     def findMedian(self) -> float:
-        if len(self.left) > len(self.right):
-            return -self.left[0]
+        n = len(self.low) + len(self.high)
+        if n % 2 == 1:
+            return float(self.high[0])
         else:
-            return (-self.left[0] + self.right[0]) / 2
+            return float(-self.low[0] + self.high[0]) / 2.0
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
