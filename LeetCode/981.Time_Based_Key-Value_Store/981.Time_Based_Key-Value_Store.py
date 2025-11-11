@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import bisect
+from collections import defaultdict
 
 
 class TimeMap:
@@ -30,3 +31,28 @@ class TimeMap:
 # obj = TimeMap()
 # obj.set(key,value,timestamp)
 # param_2 = obj.get(key,timestamp)
+
+
+class TimeMap2:
+
+    # key:[timestamp]
+    # timestamp: value
+
+    def __init__(self):
+        self.store = defaultdict(list)
+        self.times = defaultdict(str)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.store[key].append(timestamp)
+        self.times[timestamp] = value
+
+    def get(self, key: str, timestamp: int) -> str:
+        # timestamp_prev <= timestamp
+        if key not in self.store:
+            return ""
+
+        array = self.store[key]
+        idx = bisect.bisect_right(array, timestamp) - 1
+        if 0 <= idx < len(array):
+            return self.times[array[idx]]
+        return ""
