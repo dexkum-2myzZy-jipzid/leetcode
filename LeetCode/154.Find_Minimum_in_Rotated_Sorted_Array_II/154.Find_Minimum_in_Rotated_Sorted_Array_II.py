@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+
+class Solution:
+    def findMin(self, nums: list[int]) -> int:
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            elif nums[mid] == nums[right]:
+                right -= 1
+            else:
+                right = mid
+
+        return nums[left]
