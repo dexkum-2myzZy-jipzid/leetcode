@@ -3,22 +3,6 @@
 from typing import List
 
 
-# linear traversal
-class Solution:
-    def findKthPositive(self, arr: List[int], k: int) -> int:
-        # increasing order, k
-        num = 0
-        i = 0
-        while k > 0:
-            num += 1
-            if i < len(arr) and num == arr[i]:
-                i += 1
-            else:
-                k -= 1
-
-        return num
-
-
 # binary search
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
@@ -31,5 +15,29 @@ class Solution:
                 left = mid + 1
             else:
                 right = mid
+
+        return left + k
+
+
+class Solution2:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        # binary search
+        # missing number
+
+        # [1, 2, 5] k= 2. 5-3= 2
+
+        left, right = 0, len(arr) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            missing_num = arr[mid] - (mid + 1)
+            if missing_num < k:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        # left = right+1
+        # kth missing in arr[right] and arr[left]
+        # arr[right] - (right+1)
+        # arr[right] + k - arr[right] + (right+1) = k + right + 1
 
         return left + k
