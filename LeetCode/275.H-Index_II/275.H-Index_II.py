@@ -14,9 +14,16 @@ class Solution:
         res = 0
         while left <= right:
             mid = (left + right) // 2
-            h_index = min(n - mid, citations[mid])
+            # update res
+            papers = n - mid
+            c = citations[mid]
+
+            h_index = min(papers, c)
             res = max(res, h_index)
-            if citations[mid] >= n - mid:
+
+            # if c >= papers, keep looking for left side, find bigger papers,
+            # so can make h_index bigger
+            if c >= papers:
                 right = mid - 1
             else:
                 left = mid + 1
