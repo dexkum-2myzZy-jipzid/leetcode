@@ -160,6 +160,7 @@ cython_debug/
 .idea/
 
 .DSStore
+.DS_Store
 
 parse_leetcode_rating/
 
