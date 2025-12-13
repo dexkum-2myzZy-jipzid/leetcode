@@ -25,3 +25,23 @@ class Solution:
                 res = (res + pow2[idx - i]) % MOD
 
         return res
+
+
+class Solution2:
+    def numSubseq(self, nums: list[int], target: int) -> int:
+        nums.sort()
+        n = len(nums)
+
+        MOD = 10**9 + 7
+        left, right = 0, n - 1
+        res = 0
+
+        while left <= right:
+            if nums[left] + nums[right] <= target:
+                contribution = pow(2, right - left, MOD)
+                res = (res + contribution) % MOD
+                left += 1
+            else:
+                right -= 1
+
+        return res
