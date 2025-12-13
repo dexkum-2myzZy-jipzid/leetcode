@@ -1,39 +1,44 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from math import inf
 
 
-# my binary search
 class Solution:
-    def findPeakElement(self, nums: List[int]) -> int:
-        # 0, n-1
-        # x m y ->  ( x < m and m > y)  m is peak
-        #  x > m and m > y
-        # x < m and m < y
-        nums = [-math.inf] + nums + [-math.inf]
+    def findPeakElement(self, nums: list[int]) -> int:
+        # nums[i-1] nums[i] nums[i+1]
+        # if nums[i-1] < nums[i] > nums[i+1]:
+        #     return nums[i]
+        # elif nums[i-1] < nums[i] < nums[i+1]:
+        #     left = i + 1
+        # elif nums[i-1] > nums[i] > nums[i+1]:
+        #     right = i -1
+        # elif nums[i-1] > nums[i] < nums[i+1]:
+        #     right = i - 1
+
         n = len(nums)
-        l, r = 1, n - 1
+        left, right = 0, n - 1
+        while left < right:
+            mid = (left + right) // 2
 
-        while l < r:
-            m = (l + r) // 2
+            low = nums[mid - 1] if mid > 0 else -inf
+            high = nums[mid + 1] if mid < n - 1 else -inf
 
-            # check if mth element is peak
-            if nums[m - 1] < nums[m] and nums[m] > nums[m + 1]:
-                return m - 1
-            elif nums[m - 1] > nums[m] > nums[m + 1]:
-                r = m
-            elif nums[m - 1] < nums[m] < nums[m + 1]:
-                l = m + 1
-            else:  # nums[m-1] > nums[m] and nums[m] < nums[m+1]
-                l = m + 1
+            if low < nums[mid] and nums[mid] > high:
+                return mid
+            elif low < nums[mid] and nums[mid] < high:
+                left = mid + 1
+            elif low > nums[mid] and nums[mid] > high:
+                right = mid - 1
+            else:
+                right = mid - 1
 
-        return l - 1
+        return left
 
 
 # binary search
-from typing import List
-
-
-class Solution:
-    def findPeakElement(self, nums: List[int]) -> int:
+class Solution2:
+    def findPeakElement(self, nums: list[int]) -> int:
         left, right = 0, len(nums) - 1
         while left < right:
             mid = (left + right) // 2
@@ -41,4 +46,5 @@ class Solution:
                 left = mid + 1
             else:
                 right = mid
-        return left  # 或 return right，最后 left==right
+
+        return left
