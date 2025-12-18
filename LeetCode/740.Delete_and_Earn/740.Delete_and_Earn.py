@@ -1,28 +1,36 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from collections import Counter
 
 
 class Solution:
-    def deleteAndEarn(self, nums: List[int]) -> int:
+    def deleteAndEarn(self, nums: list[int]) -> int:
+        # pick nums[i] and get its points, delete nums[i-1] & nums[i+1]
+        # return max num of points
+
+        # 1. counter nums, num: count : {2: 2, 3:3, 4:1}
+        # 2. sort counter.keys keys = [2, 3, 4]
+        # 3. using dp, dp[i] represent max points we can get in keys[:i]
+        # cur_key, cur_key-1 in count,
+        #     dp[i] = max(cur_key * count[cur_key] + dp[i-2], dp[i-1])
+
         count = Counter(nums)
 
-        vals = [key for key in sorted(count)]
+        keys = sorted(count.keys())
+        n = len(keys)
 
-        n = len(vals)
-        dp = [v * count[v] for v in vals]
+        dp = [0] * (n + 1)
 
-        for i in range(1, n):
-            if vals[i - 1] == vals[i] - 1:
-                # can't add vals[i-1] points
-                if i >= 2:
-                    dp[i] = max(dp[i - 1], dp[i] + dp[i - 2])
-                else:
-                    dp[i] = max(dp[i - 1], dp[i])
+        # init dp
+        dp[1] = keys[0] * count[keys[0]]
+
+        for i in range(2, n + 1):
+            cur = keys[i - 1]
+            points = cur * count[cur]
+            if cur - 1 in count:
+                dp[i] = max(points + dp[i - 2], dp[i - 1])
             else:
-                dp[i] += dp[i - 1]
+                dp[i] = dp[i - 1] + points
 
-        # print(f"vals: {vals}\ndp: {dp}")
-
-        if n == 1:
-            return dp[0]
-        else:
-            return max(dp[-1], dp[-2])
+        return dp[n]
