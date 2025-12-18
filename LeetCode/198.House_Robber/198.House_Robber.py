@@ -1,29 +1,22 @@
 #!/usr/bin/env python3
 
+
 class Solution:
-    def rob(self, nums: List[int]) -> int:
+    def rob(self, nums: list[int]) -> int:
+        # dp[i] represent max money i can rob in nums[:i]
+        # dp[i] two choice
+        # dp[i] = max(dp[i-1], dp[i-2] + num)
+
         n = len(nums)
+        if n == 1:
+            return nums[0]
+        elif n == 2:
+            return max(nums[0], nums[1])
 
-        dp = [0] * (n + 1)
+        f1, f2 = nums[0], max(nums[0], nums[1])
 
-        # init dp
-        dp[1] = nums[0]
+        for i in range(2, n):
+            current = max(f1 + nums[i], f2)
+            f1, f2 = f2, current
 
-        for i in range(2, n + 1):
-            # rob current house
-            cur = dp[i - 2] + nums[i - 1]
-            # not rob current house
-            pre = dp[i - 1]
-
-            dp[i] = max(cur, pre)
-
-        return dp[n]
-
-
-"""
-n = len(nums)
-dp[n+1]
-dp[i] robber can rob max amount of money from [1-i]
-[1, 2, 3, 1]
-[0, 1, 2, 4, 4]
-"""
+        return f2
