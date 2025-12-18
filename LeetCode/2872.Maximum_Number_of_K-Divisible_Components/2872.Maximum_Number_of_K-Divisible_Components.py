@@ -19,16 +19,14 @@ class Solution:
             graph[b].append(a)
 
         res = 0
-        seen = set()
 
-        def dfs(i: int) -> int:
+        def dfs(node: int, parent: int) -> int:
             nonlocal res
 
-            cur = values[i]
-            for j in graph[i]:
-                if j not in seen:
-                    seen.add(j)
-                    cur += dfs(j)
+            cur = values[node]
+            for nei in graph[node]:
+                if nei != parent:
+                    cur += dfs(nei, node)
 
             if cur % k == 0:
                 res += 1
@@ -36,7 +34,6 @@ class Solution:
             else:
                 return cur
 
-        seen.add(0)
-        dfs(0)
+        dfs(0, -1)
 
         return res
