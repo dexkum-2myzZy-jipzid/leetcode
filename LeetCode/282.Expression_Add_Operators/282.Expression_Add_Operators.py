@@ -46,3 +46,46 @@ class Solution:
         backtrack(0, 0, "", 0)
 
         return self.res
+
+
+class Solution2:
+    def addOperators(self, num: str, target: int) -> list[str]:
+
+        # backtrack
+        # index: start index
+        # path: expressions
+        # stack: caculate
+
+        n = len(num)
+        res = []
+
+        def backtrack(index: int, path: str, stack: list[int]):
+            if index == n:
+                if sum(stack) == target:
+                    res.append(path)
+                return
+
+            for i in range(index, n):
+                # no leading zeros
+                if num[index] == "0" and i > index:
+                    break
+
+                substr = num[index : i + 1]
+                val = int(substr)
+
+                if index == 0:
+                    backtrack(i + 1, path + substr, stack + [val])
+                else:
+                    # "+"
+                    backtrack(i + 1, path + "+" + substr, stack + [val])
+                    # "-"
+                    backtrack(i + 1, path + "-" + substr, stack + [-val])
+                    # "*"
+                    new_stack = stack[:]
+                    last = new_stack.pop()
+                    new_stack.append(last * val)
+                    backtrack(i + 1, path + "*" + substr, new_stack)
+
+        backtrack(0, "", [])
+
+        return res
